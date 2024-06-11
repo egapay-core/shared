@@ -5,9 +5,9 @@ const topicPrefix = "egapay."
 type CollectionTopic string
 
 const (
-	// InitialCollectionRequest - topic for initial collection request
-	InitialCollectionRequest CollectionTopic = topicPrefix + "collection_request"
-	
-	// InitialCollectionResponse - topic for initial collection response
-	InitialCollectionResponse CollectionTopic = topicPrefix + "collection_response"
+	InitialMtnGhMadApiCollectionRequest  CollectionTopic = topicPrefix + "mtngh.mad_api.collection_request"
+	InitialMtnGhMadApiCollectionResponse CollectionTopic = topicPrefix + "mtngh.mad_api.collection_response"
+
+	InitialMtnGhOpenApiCollectionRequest  CollectionTopic = topicPrefix + "mtngh.open_api.collection_request"
+	InitialMtnGhOpenApiCollectionResponse CollectionTopic = topicPrefix + "mtngh.open_api.collection_response"
 )
