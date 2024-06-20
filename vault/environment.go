@@ -9,14 +9,3 @@ type ClientEnvironment struct {
 	Token string
 	Vault string
 }
-
-// DatabaseConnectionConfigurator - the type of database connection string to use
-type DatabaseConnectionConfigurator int
-
-const (
-	// CustomerConnectionConfigurator - customer database connection string
-	CustomerConnectionConfigurator DatabaseConnectionConfigurator = iota
-	
-	// PaymentConnectionConfigurator - payment database connection string
-	PaymentConnectionConfigurator
-)
