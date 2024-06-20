@@ -6,6 +6,7 @@ import (
 	"github.com/egapay-core/shared/vault"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"log"
+	"sync"
 )
 
 // databaseConfig - database configuration
@@ -18,19 +19,36 @@ type databaseConfig struct {
 	DefaultDatabase   string `opfield:"database"`
 }
 
+// DbConfigurator - database connection configurator. This struct is used to configure the database connection.
+type DbConfigurator struct {
+	ks           *vault.KeyStoreConfig
+	customerPool *pgxpool.Pool
+	paymentPool  *pgxpool.Pool
+}
+
+// NewDbConfigurator - creates a new database configurator instance
+func NewDbConfigurator(ks *vault.KeyStoreConfig) *DbConfigurator {
+	cfg := &DbConfigurator{ks: ks}
+	if err := loadConfig(cfg); err != nil {
+		log.Fatalf("could not load database configuration: %v", err)
+	}
+	return cfg
+}
+
 // NewConn returns a connection from the pool
-func NewConn(ks *vault.KeyStoreConfig, configurator ConnectionConfigurator) *pgxpool.Conn {
-	// get the connection string from the key vault
-	connString := retrieveConnectionString(ks, configurator)
-	if connString == nil {
-		log.Printf("could not get connection string for %v", configurator)
-		return nil
+func (c *DbConfigurator) NewConn(configurer ConnectionConfigurer) *pgxpool.Conn {
+	// get the connection pool
+	var pool *pgxpool.Pool
+	switch configurer {
+	case CustomerConnectionConfigurator:
+		pool = c.customerPool
+	case PaymentConnectionConfigurator:
+		pool = c.paymentPool
 	}
 	
-	// connect to the database
-	pool := connect(*connString)
 	if pool == nil {
-		log.Fatalf("database pool is not initialized properly")
+		log.Printf("could not get connection pool for %v", configurer)
+		return nil
 	}
 	
 	// get a connection from the pool
@@ -39,6 +57,41 @@ func NewConn(ks *vault.KeyStoreConfig, configurator ConnectionConfigurator) *pgx
 		log.Fatalf("could not get connection: %v", err)
 	}
 	return conn
+}
+
+// loadConfig - loads the database configuration from the key vault
+func loadConfig(cfg *DbConfigurator) error {
+	// function to retrieve the connection pool
+	retrievePool := func(ks *vault.KeyStoreConfig,
+		configurer ConnectionConfigurer, poolChan chan<- *pgxpool.Pool, wg *sync.WaitGroup) {
+		defer wg.Done()
+		// get the connection string from the key vault
+		connString := retrieveConnectionString(ks, configurer)
+		if connString == nil {
+			log.Printf("could not get connection string for %v", configurer)
+			poolChan <- nil
+			return
+		}
+		
+		// connect to the database and return the pool
+		poolChan <- connect(*connString)
+	}
+	
+	// wait group to wait for the connection pools to be created
+	var wg sync.WaitGroup
+	wg.Add(2)
+	
+	customerPoolChan, paymentPoolChan := make(chan *pgxpool.Pool, 1), make(chan *pgxpool.Pool, 1)
+	go retrievePool(cfg.ks, CustomerConnectionConfigurator, customerPoolChan, &wg)
+	go retrievePool(cfg.ks, PaymentConnectionConfigurator, paymentPoolChan, &wg)
+	wg.Wait()
+	
+	// assign the connection pools
+	cfg.customerPool = <-customerPoolChan
+	cfg.paymentPool = <-paymentPoolChan
+	
+	log.Println("🚀 database configuration loaded successfully")
+	return nil
 }
 
 // connect creates a new connection pool
@@ -63,9 +116,8 @@ func connect(connString string) *pgxpool.Pool {
 	return pool
 }
 
-// retrieveConnectionString - gets the database connection string.from the key vault
-// for a given ConnectionConfigurator.
-func retrieveConnectionString(ks *vault.KeyStoreConfig, configurator ConnectionConfigurator) *string {
+// retrieveConnectionString - gets the database connection string.from the key vault for a given ConnectionConfigurer.
+func retrieveConnectionString(ks *vault.KeyStoreConfig, configurator ConnectionConfigurer) *string {
 	switch configurator {
 	case CustomerConnectionConfigurator:
 		var dbStruct databaseConfig
