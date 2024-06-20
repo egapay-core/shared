@@ -3,11 +3,10 @@ package vault
 import (
 	"fmt"
 	"github.com/1Password/connect-sdk-go/connect"
-	"github.com/joho/godotenv"
 	"log"
-	"os"
 )
 
+// DatabaseConfig - database configuration
 type DatabaseConfig struct {
 	Host              string `opfield:"server"`
 	Port              string `opfield:"port"`
@@ -19,27 +18,16 @@ type DatabaseConfig struct {
 
 // KeyStoreConfig - keystore configuration
 type KeyStoreConfig struct {
-	TestDatabaseConfig *DatabaseConfig
-	client             connect.Client
+	env    *ClientEnvironment
+	client connect.Client
 }
 
 // NewKeystoreConfig - create a new keystore configuration
-func NewKeystoreConfig(clientEnv ClientEnvironment) *KeyStoreConfig {
-	ks := &KeyStoreConfig{}
-	
-	// load data from the environment
-	if err := godotenv.Load("vault/.env"); err != nil {
-		log.Printf("failed to load .env file: %v", err)
-		return nil
-	}
+func NewKeystoreConfig(env *ClientEnvironment) *KeyStoreConfig {
+	ks := &KeyStoreConfig{env: env}
 	
 	// connect to the vault
-	client, err := connect.NewClientFromEnvironment()
-	if err != nil {
-		log.Printf("failed to create client: %v", err)
-		return nil
-	}
-	ks.client = client
+	ks.client = connect.NewClient(env.Host, env.Token)
 	
 	// load credentials from vault
 	errChan := make(chan error, 1)
@@ -53,14 +41,14 @@ func (ks *KeyStoreConfig) GetDatabaseConnectionString(configurator DatabaseConne
 	switch configurator {
 	case CustomerConnectionConfigurator:
 		var dbStruct DatabaseConfig
-		if err := ks.client.LoadStructFromItemByTitle(&dbStruct, CustomerDatabaseVaultItem, os.Getenv("OP_VAULT")); err != nil {
+		if err := ks.client.LoadStructFromItemByTitle(&dbStruct, CustomerDatabaseVaultItem, ks.env.Vault); err != nil {
 			log.Printf("failed to load from key vault: %v", err)
 			return nil
 		}
 		return buildConnectionString(&dbStruct)
 	case PaymentConnectionConfigurator:
 		var dbStruct DatabaseConfig
-		if err := ks.client.LoadStructFromItemByTitle(&dbStruct, PaymentDatabaseVaultItem, os.Getenv("OP_VAULT")); err != nil {
+		if err := ks.client.LoadStructFromItemByTitle(&dbStruct, PaymentDatabaseVaultItem, ks.env.Vault); err != nil {
 			log.Printf("failed to load from key vault: %v", err)
 			return nil
 		}
