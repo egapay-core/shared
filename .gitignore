@@ -2,3 +2,5 @@
 **/*.env
 
 main.go
+**/sqlc.yaml
+**/sql/
