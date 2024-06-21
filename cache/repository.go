@@ -4,24 +4,21 @@ import (
 	"context"
 	"errors"
 	"github.com/redis/go-redis/v9"
-	"log"
 	"time"
 )
 
 // cache is a private struct that implements ICache
 type cache struct {
+	client *redis.Client
 	ICache
 }
 
-func New() ICache {
-	if GetCacheClient() == nil {
-		log.Fatalln("cache client is not initialized")
-	}
-	return &cache{}
+func New(client *redis.Client) ICache {
+	return &cache{client: client}
 }
 
 func (c *cache) GetString(ctx context.Context, key string) (string, error) {
-	data, err := GetCacheClient().Get(ctx, key).Result()
+	data, err := c.client.Get(ctx, key).Result()
 	if err != nil {
 		if errors.Is(err, redis.Nil) {
 			return "", ErrCacheMiss(key)
@@ -33,7 +30,7 @@ func (c *cache) GetString(ctx context.Context, key string) (string, error) {
 }
 
 func (c *cache) StoreString(ctx context.Context, key string, value string, expiration time.Duration) error {
-	err := GetCacheClient().Set(ctx, key, value, expiration).Err()
+	err := c.client.Set(ctx, key, value, expiration).Err()
 	if err != nil {
 		return ErrDefaultCache
 	}
