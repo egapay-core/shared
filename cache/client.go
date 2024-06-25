@@ -9,7 +9,7 @@ import (
 )
 
 // defaultDbIndex - default database index
-const defaultDbIndex = 0
+const defaultDbIndex = SetupCacheIndex
 
 // cacheConfig - hold the cache configuration details from vault
 type cacheConfig struct {
@@ -50,14 +50,14 @@ func loadConfig(cfg *RdbConfigurator, index int) error {
 		log.Printf("failed to load from key vault: %v", err)
 		return fmt.Errorf("failed to load from key vault: %v", err)
 	}
-
+	
 	// connect to the cache
 	addr := fmt.Sprintf("%s:%s", cacheStruct.Host, cacheStruct.Port)
 	cfg.client = connect(addr, cacheStruct.Password, index)
 	if cfg.client == nil {
 		return fmt.Errorf("failed to connect to cache")
 	}
-
+	
 	log.Println("🚀 cache configuration loaded successfully")
 	return nil
 }
@@ -70,13 +70,13 @@ func connect(address, password string, db int) *redis.Client {
 		Password: password,
 		DB:       db,
 	})
-
+	
 	// check if the connection is successful
 	if _, err := client.Ping(context.Background()).Result(); err != nil {
 		log.Printf("failed to connect to cache: %v\n", err)
 		return nil
 	}
-
+	
 	log.Println("🚀️ connected to cache")
 	return client
 }
