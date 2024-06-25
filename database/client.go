@@ -35,28 +35,17 @@ func NewDbConfigurator(ks *vault.KeyStoreConfig) *DbConfigurator {
 	return cfg
 }
 
-// NewConn returns a connection from the pool
-func (c *DbConfigurator) NewConn(configurer ConnectionConfigurer) *pgxpool.Conn {
-	// get the connection pool
-	var pool *pgxpool.Pool
+// NewConnPool returns a connection pool for the given ConnectionConfigurer
+func (c *DbConfigurator) NewConnPool(configurer ConnectionConfigurer) *pgxpool.Pool {
 	switch configurer {
 	case CustomerConnectionConfigurator:
-		pool = c.customerPool
+		return c.customerPool
 	case PaymentConnectionConfigurator:
-		pool = c.paymentPool
-	}
-	
-	if pool == nil {
-		log.Printf("could not get connection pool for %v", configurer)
+		return c.paymentPool
+	default:
+		log.Printf("unknown connection configurator: %v", configurer)
 		return nil
 	}
-	
-	// get a connection from the pool
-	conn, err := pool.Acquire(context.Background())
-	if err != nil {
-		log.Fatalf("could not get connection: %v", err)
-	}
-	return conn
 }
 
 // loadConfig - loads the database configuration from the key vault
