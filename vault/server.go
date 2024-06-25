@@ -1,13 +1,13 @@
 package vault
 
-// GrpcServer - grpc server connection configuration
-type GrpcServer struct {
+// GrpcServerConfig - grpc server connection configuration
+type GrpcServerConfig struct {
 	Host string
 	Port string
 }
 
-// HttpServer - HTTP server connection configuration
-type HttpServer struct {
+// HttpServerConfig - HTTP server connection configuration
+type HttpServerConfig struct {
 	Host string
 	Port string
 }
