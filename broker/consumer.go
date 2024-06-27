@@ -2,18 +2,26 @@ package broker
 
 import (
 	"context"
+	"fmt"
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
+	"github.com/egapay-core/shared/vault"
 	"log"
 )
 
+type brokerConfig struct {
+	ClientPros string `opfield:"client_properties"`
+}
+
 // NewConsumer creates a new Kafka consumer and subscribes to the given topics.
-func NewConsumer(servers, groupId string, topics []string) (*kafka.Consumer, error) {
+func NewConsumer(ks *vault.KeyStoreConfig, topics []string) (*kafka.Consumer, error) {
+	var brokerCfg brokerConfig
+	if err := ks.Vault.LoadStructFromItemByTitle(&brokerCfg, vault.CoreBrokerConfigItem, ks.Env.Vault); err != nil {
+		log.Printf("failed to load from key vault: %v", err)
+		return nil, fmt.Errorf("failed to load from key vault: %v", err)
+	}
+	
 	// create a new consumer
-	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": servers,
-		"group.id":          groupId,
-		"auto.offset.reset": "earliest",
-	})
+	consumer, err := kafka.NewConsumer(readFromOptsString(brokerCfg.ClientPros))
 	if err != nil {
 		log.Fatalf("Failed to create consumer: %s\n", err)
 	}
@@ -42,5 +50,13 @@ func ConsumeMessages(ctx context.Context, c *kafka.Consumer, msgChan chan<- *kaf
 			}
 			msgChan <- msg
 		}
+	}
+}
+
+func readFromOptsString(opts string) *kafka.ConfigMap {
+	return &kafka.ConfigMap{
+		"bootstrap.servers": opts,
+		"group.id":          "group",
+		"auto.offset.reset": "earliest",
 	}
 }
