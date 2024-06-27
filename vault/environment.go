@@ -5,7 +5,7 @@ package vault
 // Token - the token of the client (JWT of the vault)
 // Vault - the vault of the client (ID of the vault)
 type ClientEnvironment struct {
-	Host  string
-	Token string
-	Vault string
+	Host  string `env:"OP_CONNECT_HOST, required"`
+	Token string `env:"OP_CONNECT_TOKEN, required"`
+	Vault string `env:"OP_VAULT, required"`
 }
