@@ -8,20 +8,21 @@ import (
 	"log"
 )
 
-type brokerConfig struct {
-	ClientPros string `opfield:"client_properties"`
-}
-
 // NewConsumer creates a new Kafka consumer and subscribes to the given topics.
-func NewConsumer(ks *vault.KeyStoreConfig, topics []string) (*kafka.Consumer, error) {
+func NewConsumer(ks *vault.KeyStoreConfig, groupID string, topics []string) (*kafka.Consumer, error) {
 	var brokerCfg brokerConfig
 	if err := ks.Vault.LoadStructFromItemByTitle(&brokerCfg, vault.CoreBrokerConfigItem, ks.Env.Vault); err != nil {
 		log.Printf("failed to load from key vault: %v", err)
 		return nil, fmt.Errorf("failed to load from key vault: %v", err)
 	}
 	
+	// read the client properties
+	props := readFromOptsString(brokerCfg.ClientPros)
+	props["group.id"] = groupID
+	props["auto.offset.reset"] = "earliest"
+	
 	// create a new consumer
-	consumer, err := kafka.NewConsumer(readFromOptsString(brokerCfg.ClientPros))
+	consumer, err := kafka.NewConsumer(&props)
 	if err != nil {
 		log.Fatalf("Failed to create consumer: %s\n", err)
 	}
@@ -50,13 +51,5 @@ func ConsumeMessages(ctx context.Context, c *kafka.Consumer, msgChan chan<- *kaf
 			}
 			msgChan <- msg
 		}
-	}
-}
-
-func readFromOptsString(opts string) *kafka.ConfigMap {
-	return &kafka.ConfigMap{
-		"bootstrap.servers": opts,
-		"group.id":          "group",
-		"auto.offset.reset": "earliest",
 	}
 }

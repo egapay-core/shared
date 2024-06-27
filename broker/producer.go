@@ -3,11 +3,23 @@ package broker
 import (
 	"fmt"
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
+	"github.com/egapay-core/shared/vault"
+	"log"
 )
 
 // NewProducer creates a new Kafka producer.
-func NewProducer(brokers string) (*kafka.Producer, error) {
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": brokers})
+func NewProducer(ks *vault.KeyStoreConfig) (*kafka.Producer, error) {
+	var brokerCfg brokerConfig
+	if err := ks.Vault.LoadStructFromItemByTitle(&brokerCfg, vault.CoreBrokerConfigItem, ks.Env.Vault); err != nil {
+		log.Printf("failed to load from key vault: %v", err)
+		return nil, fmt.Errorf("failed to load from key vault: %v", err)
+	}
+	
+	// read the client properties
+	props := readFromOptsString(brokerCfg.ClientPros)
+	
+	// create a new producer
+	p, err := kafka.NewProducer(&props)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create producer: %w", err)
 	}
