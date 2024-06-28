@@ -4,3 +4,7 @@
 main.go
 **/sqlc.yaml
 **/sql/
+Makefile
+protos/
+internal/proto/
+scripts/
