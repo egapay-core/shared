@@ -45,7 +45,7 @@ func ConsumeMessages(ctx context.Context, c *kafka.Consumer, msgChan chan<- *kaf
 		case <-ctx.Done():
 			return
 		default:
-			msg, err := c.ReadMessage(30000)
+			msg, err := c.ReadMessage(-1)
 			if err != nil {
 				log.Printf("Consumer error: %v (%v)\n", err, msg)
 			}
