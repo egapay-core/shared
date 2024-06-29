@@ -15,4 +15,7 @@ const (
 	
 	// PaymentTypeCacheIndex - index for payment type cache (payment type data like card, bank etc. for source & beneficiary a/cs)
 	PaymentTypeCacheIndex
+	
+	// TransactionCacheIndex - index for transaction cache (transaction data like transaction status)
+	TransactionCacheIndex
 )
