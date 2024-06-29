@@ -1,9 +1,10 @@
 package broker
 
-import "github.com/confluentinc/confluent-kafka-go/v2/kafka"
+import "github.com/egapay-core/shared/vault"
 
-// ConsumerServiceRegistrationOption is a type alias for a function that takes a pointer to a proto message
-type ConsumerServiceRegistrationOption func(*kafka.Consumer) error
+// ConsumerServiceRegistrationOption is a type alias for a function that takes a key store configuration,
+// a groupID and a list of topics and returns an error
+type ConsumerServiceRegistrationOption func(vault.KeyStoreConfig, string, []string) error
 
 // IConsumerServer is an interface for a consumer server
 type IConsumerServer interface {
