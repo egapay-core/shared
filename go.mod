@@ -1,6 +1,6 @@
 module github.com/egapay-core/shared
 
-go 1.22
+go 1.22.4
 
 require (
 	github.com/1Password/connect-sdk-go v1.5.3
