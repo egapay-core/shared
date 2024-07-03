@@ -9,5 +9,4 @@ type ConsumerServiceRegistrationOption func(*vault.KeyStoreConfig, string, []str
 // IConsumerServer is an interface for a consumer server
 type IConsumerServer interface {
 	Start(...ConsumerServiceRegistrationOption) error
-	Stop() error
 }
