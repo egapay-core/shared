@@ -24,13 +24,8 @@ func NewCountryDataSource(crdb *pgxpool.Pool) ICountryDataSource {
 
 func (r *countryDataSource) DGetOperatingCountries(ctx context.Context) ([]*entities.CountryEntity, error) {
 	countries := make([]*entities.CountryEntity, 0)
-	rows, err := r.crdb.Query(ctx, `
-SELECT countrycode, countrydialcode, countryname, currencyiso,countrystatusactiveorclosed,
-       allowforcustomeronboardingyesno, currencyname, countryflagurl, mobilenominlen, mobilenomaxlen
-FROM setupcountry
-WHERE operatingcountryyesno = $1 and blacklistedyesno = $2 and countrystatusactiveorclosed = $3
-`, string(utils.Yes), string(utils.No), string(utils.Active))
-	
+	rows, err := r.crdb.Query(ctx, `CALL getoperatingcountries()`)
+
 	for rows.Next() {
 		country := new(entities.CountryEntity)
 		if err = rows.Scan(&country.CountryCode, &country.DialCode, &country.Name, &country.IsoCode,
@@ -40,7 +35,7 @@ WHERE operatingcountryyesno = $1 and blacklistedyesno = $2 and countrystatusacti
 		}
 		countries = append(countries, country)
 	}
-	
+
 	return countries, nil
 }
 
@@ -52,7 +47,7 @@ SELECT countrycode, countrydialcode, countryname, currencyiso,countrystatusactiv
 FROM setupcountry
 WHERE blacklistedyesno = $1 and countrystatusactiveorclosed = $2
 `, string(utils.No), string(utils.Active))
-	
+
 	for rows.Next() {
 		country := new(entities.CountryEntity)
 		if err = rows.Scan(&country.CountryCode, &country.DialCode, &country.Name, &country.IsoCode,
@@ -62,6 +57,6 @@ WHERE blacklistedyesno = $1 and countrystatusactiveorclosed = $2
 		}
 		countries = append(countries, country)
 	}
-	
+
 	return countries, nil
 }

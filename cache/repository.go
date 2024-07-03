@@ -26,7 +26,7 @@ func (c *cache) GetString(ctx context.Context, key string) (string, error) {
 		}
 		return "", ErrDefaultCache
 	}
-	
+
 	return data, nil
 }
 
@@ -42,7 +42,7 @@ func (c *cache) Delete(ctx context.Context, key string) error {
 	if err := c.client.Del(ctx, key).Err(); err != nil {
 		return ErrDefaultCache
 	}
-	
+
 	return nil
 }
 
@@ -50,7 +50,7 @@ func (c *cache) StoreList(ctx context.Context, key string, values []*interface{}
 	if err := c.client.SAdd(ctx, key, toJSONArray(values)).Err(); err != nil {
 		return ErrDefaultCache
 	}
-	
+
 	return nil
 }
 
@@ -62,37 +62,43 @@ func (c *cache) GetList(ctx context.Context, key string) ([]*interface{}, error)
 		}
 		return nil, ErrDefaultCache
 	}
-	
+
 	if len(data) == 0 {
 		return nil, ErrCacheMiss(key)
 	}
-	
+
 	result := fromJSONArray(data)
 	return result, nil
 }
 
-func (c *cache) StoreHash(ctx context.Context, key string, values map[string]interface{}, _ time.Duration) error {
-	if err := c.client.HSet(ctx, key, values).Err(); err != nil {
+func (c *cache) StoreHash(ctx context.Context, key string, values map[string]interface{}, expiration time.Duration) error {
+	if err := c.client.HMSet(ctx, key, values).Err(); err != nil {
 		return ErrDefaultCache
 	}
-	
+
+	if expiration > 0 {
+		if err := c.client.Expire(ctx, key, expiration).Err(); err != nil {
+			return ErrDefaultCache
+		}
+	}
+
 	return nil
 }
 
 func (c *cache) GetHash(ctx context.Context, key, field string) (*string, error) {
-	values, err := c.client.HGet(ctx, key, field).Result()
+	result, err := c.client.HGet(ctx, key, field).Result()
 	if err != nil {
 		if errors.Is(err, redis.Nil) {
 			return nil, ErrCacheMiss(key)
 		}
 		return nil, ErrDefaultCache
 	}
-	
-	if len(values) == 0 {
+
+	if len(result) == 0 {
 		return nil, ErrCacheMiss(key)
 	}
-	
-	return &values, nil
+
+	return &result, nil
 }
 
 func (c *cache) GetAllFromHash(ctx context.Context, key string) (map[string]interface{}, error) {
@@ -103,17 +109,17 @@ func (c *cache) GetAllFromHash(ctx context.Context, key string) (map[string]inte
 		}
 		return nil, ErrDefaultCache
 	}
-	
+
 	if len(values) == 0 {
 		return nil, ErrCacheMiss(key)
 	}
-	
+
 	// convert map[string]string to map[string]interface{}
 	result := make(map[string]interface{})
 	for k, v := range values {
 		result[k] = v
 	}
-	
+
 	return result, nil
 }
 
@@ -122,7 +128,7 @@ func toJsonString(data *interface{}) string {
 	if err != nil {
 		return ""
 	}
-	
+
 	return string(encoded)
 }
 
@@ -131,7 +137,7 @@ func toJSONArray(data []*interface{}) []string {
 	for _, v := range data {
 		result = append(result, toJsonString(v))
 	}
-	
+
 	return result
 }
 
@@ -144,6 +150,6 @@ func fromJSONArray(data []string) []*interface{} {
 		}
 		result = append(result, &temp)
 	}
-	
+
 	return result
 }

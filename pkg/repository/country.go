@@ -46,9 +46,11 @@ func (r *countryRepository) GetOperatingCountries(ctx context.Context) ([]*entit
 		}
 
 		// store countries in cache
-		if err = r.cache.StoreList(ctx, cacheKeyOperatingCountries, tempCountries, 0); err != nil {
-			log.Printf("failed to store countries in cache: %v", err)
-			return nil, err
+		if len(tempCountries) > 0 {
+			if err = r.cache.StoreList(ctx, cacheKeyOperatingCountries, tempCountries, 0); err != nil {
+				log.Printf("failed to store countries in cache: %v", err)
+				return nil, err
+			}
 		}
 
 		return countries, nil
@@ -92,9 +94,11 @@ func (r *countryRepository) GetSignupCountries(ctx context.Context) ([]*entities
 		}
 
 		// store countries in cache
-		if err = r.cache.StoreList(ctx, cacheKeySignupCountries, tempCountries, 0); err != nil {
-			log.Printf("failed to store countries in cache: %v", err)
-			return nil, err
+		if len(tempCountries) > 0 {
+			if err = r.cache.StoreList(ctx, cacheKeySignupCountries, tempCountries, 0); err != nil {
+				log.Printf("failed to store countries in cache: %v", err)
+				return nil, err
+			}
 		}
 
 		return countries, nil

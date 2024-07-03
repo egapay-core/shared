@@ -11,9 +11,9 @@ import (
 // LoggingUnaryInterceptor logs the unary request
 func LoggingUnaryInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
 	start := time.Now()
-	
+
 	h, err := handler(ctx, req)
-	
+
 	// logging
 	log.Printf(`
 ================== gRPC Unary Call ===================
@@ -29,7 +29,7 @@ Response: %v
 		time.Since(start),
 		err,
 		h)
-	
+
 	return h, err
 }
 
@@ -38,11 +38,11 @@ func LoggingStreamInterceptor(srv interface{}, ss grpc.ServerStream, info *grpc.
 	if strings.Contains(info.FullMethod, "Reflection") {
 		return handler(srv, ss)
 	}
-	
+
 	start := time.Now()
-	
+
 	err := handler(srv, ss)
-	
+
 	// logging
 	log.Printf(`
 ================== gRPC Streaming Call ===================
@@ -58,6 +58,6 @@ Response: %v
 		time.Since(start),
 		err,
 		ss)
-	
+
 	return err
 }
