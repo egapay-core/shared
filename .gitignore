@@ -6,6 +6,6 @@ main.go
 **/sql/
 Makefile
 protos/
-internal/proto/
+#internal/proto/
 scripts/
 vendor/
