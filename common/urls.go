@@ -16,7 +16,7 @@ func NewPayPartnerConnectionFromVault(cfg *payPartnerServiceIDFromVault) *PayPar
 		MtnConfig: &mtnConfig{
 			EgapayMadApi: &partnerServiceConfig{
 				ServiceID:   cfg.MtnConfig.EgapayMadApi,
-				ServiceAddr: "mtnegapaymadapi",
+				ServiceAddr: "mtngh-egapay.uat",
 			},
 			PospayMadApi: &partnerServiceConfig{
 				ServiceID:   cfg.MtnConfig.PospayMadApi,
@@ -112,19 +112,19 @@ func structToMap(obj interface{}) map[string]interface{} {
 	result := make(map[string]interface{})
 	value := reflect.ValueOf(obj)
 	typ := reflect.TypeOf(obj)
-
+	
 	for i := 0; i < value.NumField(); i++ {
 		field := value.Field(i)
 		fieldType := typ.Field(i)
 		fieldName := fieldType.Name
-
+		
 		if field.Kind() == reflect.Ptr && !field.IsNil() {
 			result[fieldName] = structToMap(field.Elem().Interface())
 		} else {
 			result[fieldName] = field.Interface()
 		}
 	}
-
+	
 	return result
 }
 
