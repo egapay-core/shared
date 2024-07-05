@@ -19,8 +19,8 @@ const (
 // ISharedRepository is an interface for a repository that provides shared functionality
 // across the application
 type ISharedRepository interface {
-	// GetConnectionForClient returns the connection string for a pay partner grpc client
-	GetConnectionForClient(context.Context, *pb.NameEnquiryRequest) (string, error)
+	// GetConnectionForNameEnquiryClient returns the connection string for a pay partner grpc client
+	GetConnectionForNameEnquiryClient(context.Context, *pb.PaymentNameEnquiryRequest) (string, error)
 }
 
 type sharedRepository struct {
@@ -40,7 +40,7 @@ func NewSharedRepository(ks *vault.KeyStoreConfig) ISharedRepository {
 	return &sharedRepository{ks: ks, rdb: cacheInstance}
 }
 
-func (r *sharedRepository) GetConnectionForClient(ctx context.Context, req *pb.NameEnquiryRequest) (string, error) {
+func (r *sharedRepository) GetConnectionForNameEnquiryClient(ctx context.Context, req *pb.PaymentNameEnquiryRequest) (string, error) {
 	// load hash from cache
 	hashed, err := r.rdb.GetAllFromHash(ctx, fmt.Sprintf("%s:%s", payPartnerCacheKeyPrefix, req.GetPayPartnerServiceId()))
 	if err != nil {

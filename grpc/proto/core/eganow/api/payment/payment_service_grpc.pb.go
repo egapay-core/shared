@@ -19,327 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	CoreEgaPayDeveloperApiSvc_GetAccessToken_FullMethodName           = "/eganow.api.payment.CoreEgaPayDeveloperApiSvc/GetAccessToken"
-	CoreEgaPayDeveloperApiSvc_GetAccountHolderInfo_FullMethodName     = "/eganow.api.payment.CoreEgaPayDeveloperApiSvc/GetAccountHolderInfo"
-	CoreEgaPayDeveloperApiSvc_GetCollectionServiceList_FullMethodName = "/eganow.api.payment.CoreEgaPayDeveloperApiSvc/GetCollectionServiceList"
-	CoreEgaPayDeveloperApiSvc_GetPayoutServiceList_FullMethodName     = "/eganow.api.payment.CoreEgaPayDeveloperApiSvc/GetPayoutServiceList"
-	CoreEgaPayDeveloperApiSvc_PayoutCreditAccount_FullMethodName      = "/eganow.api.payment.CoreEgaPayDeveloperApiSvc/PayoutCreditAccount"
-	CoreEgaPayDeveloperApiSvc_CollectionDebitAccount_FullMethodName   = "/eganow.api.payment.CoreEgaPayDeveloperApiSvc/CollectionDebitAccount"
-	CoreEgaPayDeveloperApiSvc_TransactionStatusQuery_FullMethodName   = "/eganow.api.payment.CoreEgaPayDeveloperApiSvc/TransactionStatusQuery"
-)
-
-// CoreEgaPayDeveloperApiSvcClient is the client API for CoreEgaPayDeveloperApiSvc service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CoreEgaPayDeveloperApiSvcClient interface {
-	GetAccessToken(ctx context.Context, in *EgaPayEmpty, opts ...grpc.CallOption) (*AccessTokenResponse, error)
-	GetAccountHolderInfo(ctx context.Context, in *GetAccountInfoRequest, opts ...grpc.CallOption) (*GetAccountInfoResponse, error)
-	GetCollectionServiceList(ctx context.Context, in *GetServiceListRequest, opts ...grpc.CallOption) (*GetServiceListResponse, error)
-	GetPayoutServiceList(ctx context.Context, in *GetServiceListRequest, opts ...grpc.CallOption) (*GetServiceListResponse, error)
-	PayoutCreditAccount(ctx context.Context, in *TransferRequest, opts ...grpc.CallOption) (*TransferResponse, error)
-	CollectionDebitAccount(ctx context.Context, in *TransferRequest, opts ...grpc.CallOption) (*TransferResponse, error)
-	TransactionStatusQuery(ctx context.Context, in *QueryTransferStatusRequest, opts ...grpc.CallOption) (*QueryTransferStatusTransferResponse, error)
-}
-
-type coreEgaPayDeveloperApiSvcClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewCoreEgaPayDeveloperApiSvcClient(cc grpc.ClientConnInterface) CoreEgaPayDeveloperApiSvcClient {
-	return &coreEgaPayDeveloperApiSvcClient{cc}
-}
-
-func (c *coreEgaPayDeveloperApiSvcClient) GetAccessToken(ctx context.Context, in *EgaPayEmpty, opts ...grpc.CallOption) (*AccessTokenResponse, error) {
-	out := new(AccessTokenResponse)
-	err := c.cc.Invoke(ctx, CoreEgaPayDeveloperApiSvc_GetAccessToken_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *coreEgaPayDeveloperApiSvcClient) GetAccountHolderInfo(ctx context.Context, in *GetAccountInfoRequest, opts ...grpc.CallOption) (*GetAccountInfoResponse, error) {
-	out := new(GetAccountInfoResponse)
-	err := c.cc.Invoke(ctx, CoreEgaPayDeveloperApiSvc_GetAccountHolderInfo_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *coreEgaPayDeveloperApiSvcClient) GetCollectionServiceList(ctx context.Context, in *GetServiceListRequest, opts ...grpc.CallOption) (*GetServiceListResponse, error) {
-	out := new(GetServiceListResponse)
-	err := c.cc.Invoke(ctx, CoreEgaPayDeveloperApiSvc_GetCollectionServiceList_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *coreEgaPayDeveloperApiSvcClient) GetPayoutServiceList(ctx context.Context, in *GetServiceListRequest, opts ...grpc.CallOption) (*GetServiceListResponse, error) {
-	out := new(GetServiceListResponse)
-	err := c.cc.Invoke(ctx, CoreEgaPayDeveloperApiSvc_GetPayoutServiceList_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *coreEgaPayDeveloperApiSvcClient) PayoutCreditAccount(ctx context.Context, in *TransferRequest, opts ...grpc.CallOption) (*TransferResponse, error) {
-	out := new(TransferResponse)
-	err := c.cc.Invoke(ctx, CoreEgaPayDeveloperApiSvc_PayoutCreditAccount_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *coreEgaPayDeveloperApiSvcClient) CollectionDebitAccount(ctx context.Context, in *TransferRequest, opts ...grpc.CallOption) (*TransferResponse, error) {
-	out := new(TransferResponse)
-	err := c.cc.Invoke(ctx, CoreEgaPayDeveloperApiSvc_CollectionDebitAccount_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *coreEgaPayDeveloperApiSvcClient) TransactionStatusQuery(ctx context.Context, in *QueryTransferStatusRequest, opts ...grpc.CallOption) (*QueryTransferStatusTransferResponse, error) {
-	out := new(QueryTransferStatusTransferResponse)
-	err := c.cc.Invoke(ctx, CoreEgaPayDeveloperApiSvc_TransactionStatusQuery_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// CoreEgaPayDeveloperApiSvcServer is the server API for CoreEgaPayDeveloperApiSvc service.
-// All implementations must embed UnimplementedCoreEgaPayDeveloperApiSvcServer
-// for forward compatibility
-type CoreEgaPayDeveloperApiSvcServer interface {
-	GetAccessToken(context.Context, *EgaPayEmpty) (*AccessTokenResponse, error)
-	GetAccountHolderInfo(context.Context, *GetAccountInfoRequest) (*GetAccountInfoResponse, error)
-	GetCollectionServiceList(context.Context, *GetServiceListRequest) (*GetServiceListResponse, error)
-	GetPayoutServiceList(context.Context, *GetServiceListRequest) (*GetServiceListResponse, error)
-	PayoutCreditAccount(context.Context, *TransferRequest) (*TransferResponse, error)
-	CollectionDebitAccount(context.Context, *TransferRequest) (*TransferResponse, error)
-	TransactionStatusQuery(context.Context, *QueryTransferStatusRequest) (*QueryTransferStatusTransferResponse, error)
-	mustEmbedUnimplementedCoreEgaPayDeveloperApiSvcServer()
-}
-
-// UnimplementedCoreEgaPayDeveloperApiSvcServer must be embedded to have forward compatible implementations.
-type UnimplementedCoreEgaPayDeveloperApiSvcServer struct {
-}
-
-func (UnimplementedCoreEgaPayDeveloperApiSvcServer) GetAccessToken(context.Context, *EgaPayEmpty) (*AccessTokenResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAccessToken not implemented")
-}
-func (UnimplementedCoreEgaPayDeveloperApiSvcServer) GetAccountHolderInfo(context.Context, *GetAccountInfoRequest) (*GetAccountInfoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAccountHolderInfo not implemented")
-}
-func (UnimplementedCoreEgaPayDeveloperApiSvcServer) GetCollectionServiceList(context.Context, *GetServiceListRequest) (*GetServiceListResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCollectionServiceList not implemented")
-}
-func (UnimplementedCoreEgaPayDeveloperApiSvcServer) GetPayoutServiceList(context.Context, *GetServiceListRequest) (*GetServiceListResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPayoutServiceList not implemented")
-}
-func (UnimplementedCoreEgaPayDeveloperApiSvcServer) PayoutCreditAccount(context.Context, *TransferRequest) (*TransferResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PayoutCreditAccount not implemented")
-}
-func (UnimplementedCoreEgaPayDeveloperApiSvcServer) CollectionDebitAccount(context.Context, *TransferRequest) (*TransferResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CollectionDebitAccount not implemented")
-}
-func (UnimplementedCoreEgaPayDeveloperApiSvcServer) TransactionStatusQuery(context.Context, *QueryTransferStatusRequest) (*QueryTransferStatusTransferResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TransactionStatusQuery not implemented")
-}
-func (UnimplementedCoreEgaPayDeveloperApiSvcServer) mustEmbedUnimplementedCoreEgaPayDeveloperApiSvcServer() {
-}
-
-// UnsafeCoreEgaPayDeveloperApiSvcServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CoreEgaPayDeveloperApiSvcServer will
-// result in compilation errors.
-type UnsafeCoreEgaPayDeveloperApiSvcServer interface {
-	mustEmbedUnimplementedCoreEgaPayDeveloperApiSvcServer()
-}
-
-func RegisterCoreEgaPayDeveloperApiSvcServer(s grpc.ServiceRegistrar, srv CoreEgaPayDeveloperApiSvcServer) {
-	s.RegisterService(&CoreEgaPayDeveloperApiSvc_ServiceDesc, srv)
-}
-
-func _CoreEgaPayDeveloperApiSvc_GetAccessToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EgaPayEmpty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).GetAccessToken(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CoreEgaPayDeveloperApiSvc_GetAccessToken_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).GetAccessToken(ctx, req.(*EgaPayEmpty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CoreEgaPayDeveloperApiSvc_GetAccountHolderInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAccountInfoRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).GetAccountHolderInfo(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CoreEgaPayDeveloperApiSvc_GetAccountHolderInfo_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).GetAccountHolderInfo(ctx, req.(*GetAccountInfoRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CoreEgaPayDeveloperApiSvc_GetCollectionServiceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetServiceListRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).GetCollectionServiceList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CoreEgaPayDeveloperApiSvc_GetCollectionServiceList_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).GetCollectionServiceList(ctx, req.(*GetServiceListRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CoreEgaPayDeveloperApiSvc_GetPayoutServiceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetServiceListRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).GetPayoutServiceList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CoreEgaPayDeveloperApiSvc_GetPayoutServiceList_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).GetPayoutServiceList(ctx, req.(*GetServiceListRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CoreEgaPayDeveloperApiSvc_PayoutCreditAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TransferRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).PayoutCreditAccount(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CoreEgaPayDeveloperApiSvc_PayoutCreditAccount_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).PayoutCreditAccount(ctx, req.(*TransferRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CoreEgaPayDeveloperApiSvc_CollectionDebitAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TransferRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).CollectionDebitAccount(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CoreEgaPayDeveloperApiSvc_CollectionDebitAccount_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).CollectionDebitAccount(ctx, req.(*TransferRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CoreEgaPayDeveloperApiSvc_TransactionStatusQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryTransferStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).TransactionStatusQuery(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CoreEgaPayDeveloperApiSvc_TransactionStatusQuery_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreEgaPayDeveloperApiSvcServer).TransactionStatusQuery(ctx, req.(*QueryTransferStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// CoreEgaPayDeveloperApiSvc_ServiceDesc is the grpc.ServiceDesc for CoreEgaPayDeveloperApiSvc service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var CoreEgaPayDeveloperApiSvc_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "eganow.api.payment.CoreEgaPayDeveloperApiSvc",
-	HandlerType: (*CoreEgaPayDeveloperApiSvcServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetAccessToken",
-			Handler:    _CoreEgaPayDeveloperApiSvc_GetAccessToken_Handler,
-		},
-		{
-			MethodName: "GetAccountHolderInfo",
-			Handler:    _CoreEgaPayDeveloperApiSvc_GetAccountHolderInfo_Handler,
-		},
-		{
-			MethodName: "GetCollectionServiceList",
-			Handler:    _CoreEgaPayDeveloperApiSvc_GetCollectionServiceList_Handler,
-		},
-		{
-			MethodName: "GetPayoutServiceList",
-			Handler:    _CoreEgaPayDeveloperApiSvc_GetPayoutServiceList_Handler,
-		},
-		{
-			MethodName: "PayoutCreditAccount",
-			Handler:    _CoreEgaPayDeveloperApiSvc_PayoutCreditAccount_Handler,
-		},
-		{
-			MethodName: "CollectionDebitAccount",
-			Handler:    _CoreEgaPayDeveloperApiSvc_CollectionDebitAccount_Handler,
-		},
-		{
-			MethodName: "TransactionStatusQuery",
-			Handler:    _CoreEgaPayDeveloperApiSvc_TransactionStatusQuery_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "eganow/api/payment/payment_service.proto",
-}
-
-const (
-	CoreMoneyTransferSvc_SendMoney_FullMethodName = "/eganow.api.payment.CoreMoneyTransferSvc/SendMoney"
+	CoreMoneyTransferSvc_CollectMoney_FullMethodName = "/eganow.api.payment.CoreMoneyTransferSvc/CollectMoney"
+	CoreMoneyTransferSvc_PayoutMoney_FullMethodName  = "/eganow.api.payment.CoreMoneyTransferSvc/PayoutMoney"
 )
 
 // CoreMoneyTransferSvcClient is the client API for CoreMoneyTransferSvc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CoreMoneyTransferSvcClient interface {
-	SendMoney(ctx context.Context, in *MoneyTransferRequest, opts ...grpc.CallOption) (*MoneyTransferResponse, error)
+	CollectMoney(ctx context.Context, in *PaymentMoneyTransferRequest, opts ...grpc.CallOption) (*PaymentMoneyTransferResponse, error)
+	PayoutMoney(ctx context.Context, in *PaymentMoneyTransferRequest, opts ...grpc.CallOption) (*PaymentMoneyTransferResponse, error)
 }
 
 type coreMoneyTransferSvcClient struct {
@@ -350,9 +39,18 @@ func NewCoreMoneyTransferSvcClient(cc grpc.ClientConnInterface) CoreMoneyTransfe
 	return &coreMoneyTransferSvcClient{cc}
 }
 
-func (c *coreMoneyTransferSvcClient) SendMoney(ctx context.Context, in *MoneyTransferRequest, opts ...grpc.CallOption) (*MoneyTransferResponse, error) {
-	out := new(MoneyTransferResponse)
-	err := c.cc.Invoke(ctx, CoreMoneyTransferSvc_SendMoney_FullMethodName, in, out, opts...)
+func (c *coreMoneyTransferSvcClient) CollectMoney(ctx context.Context, in *PaymentMoneyTransferRequest, opts ...grpc.CallOption) (*PaymentMoneyTransferResponse, error) {
+	out := new(PaymentMoneyTransferResponse)
+	err := c.cc.Invoke(ctx, CoreMoneyTransferSvc_CollectMoney_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *coreMoneyTransferSvcClient) PayoutMoney(ctx context.Context, in *PaymentMoneyTransferRequest, opts ...grpc.CallOption) (*PaymentMoneyTransferResponse, error) {
+	out := new(PaymentMoneyTransferResponse)
+	err := c.cc.Invoke(ctx, CoreMoneyTransferSvc_PayoutMoney_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -363,7 +61,8 @@ func (c *coreMoneyTransferSvcClient) SendMoney(ctx context.Context, in *MoneyTra
 // All implementations must embed UnimplementedCoreMoneyTransferSvcServer
 // for forward compatibility
 type CoreMoneyTransferSvcServer interface {
-	SendMoney(context.Context, *MoneyTransferRequest) (*MoneyTransferResponse, error)
+	CollectMoney(context.Context, *PaymentMoneyTransferRequest) (*PaymentMoneyTransferResponse, error)
+	PayoutMoney(context.Context, *PaymentMoneyTransferRequest) (*PaymentMoneyTransferResponse, error)
 	mustEmbedUnimplementedCoreMoneyTransferSvcServer()
 }
 
@@ -371,8 +70,11 @@ type CoreMoneyTransferSvcServer interface {
 type UnimplementedCoreMoneyTransferSvcServer struct {
 }
 
-func (UnimplementedCoreMoneyTransferSvcServer) SendMoney(context.Context, *MoneyTransferRequest) (*MoneyTransferResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendMoney not implemented")
+func (UnimplementedCoreMoneyTransferSvcServer) CollectMoney(context.Context, *PaymentMoneyTransferRequest) (*PaymentMoneyTransferResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CollectMoney not implemented")
+}
+func (UnimplementedCoreMoneyTransferSvcServer) PayoutMoney(context.Context, *PaymentMoneyTransferRequest) (*PaymentMoneyTransferResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PayoutMoney not implemented")
 }
 func (UnimplementedCoreMoneyTransferSvcServer) mustEmbedUnimplementedCoreMoneyTransferSvcServer() {}
 
@@ -387,20 +89,38 @@ func RegisterCoreMoneyTransferSvcServer(s grpc.ServiceRegistrar, srv CoreMoneyTr
 	s.RegisterService(&CoreMoneyTransferSvc_ServiceDesc, srv)
 }
 
-func _CoreMoneyTransferSvc_SendMoney_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MoneyTransferRequest)
+func _CoreMoneyTransferSvc_CollectMoney_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PaymentMoneyTransferRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CoreMoneyTransferSvcServer).SendMoney(ctx, in)
+		return srv.(CoreMoneyTransferSvcServer).CollectMoney(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CoreMoneyTransferSvc_SendMoney_FullMethodName,
+		FullMethod: CoreMoneyTransferSvc_CollectMoney_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreMoneyTransferSvcServer).SendMoney(ctx, req.(*MoneyTransferRequest))
+		return srv.(CoreMoneyTransferSvcServer).CollectMoney(ctx, req.(*PaymentMoneyTransferRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CoreMoneyTransferSvc_PayoutMoney_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PaymentMoneyTransferRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CoreMoneyTransferSvcServer).PayoutMoney(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CoreMoneyTransferSvc_PayoutMoney_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CoreMoneyTransferSvcServer).PayoutMoney(ctx, req.(*PaymentMoneyTransferRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -413,8 +133,12 @@ var CoreMoneyTransferSvc_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CoreMoneyTransferSvcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SendMoney",
-			Handler:    _CoreMoneyTransferSvc_SendMoney_Handler,
+			MethodName: "CollectMoney",
+			Handler:    _CoreMoneyTransferSvc_CollectMoney_Handler,
+		},
+		{
+			MethodName: "PayoutMoney",
+			Handler:    _CoreMoneyTransferSvc_PayoutMoney_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -429,7 +153,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CoreNameEnquirySvcClient interface {
-	GetAccountHolderName(ctx context.Context, in *NameEnquiryRequest, opts ...grpc.CallOption) (*NameEnquiryResponse, error)
+	GetAccountHolderName(ctx context.Context, in *PaymentNameEnquiryRequest, opts ...grpc.CallOption) (*PaymentNameEnquiryResponse, error)
 }
 
 type coreNameEnquirySvcClient struct {
@@ -440,8 +164,8 @@ func NewCoreNameEnquirySvcClient(cc grpc.ClientConnInterface) CoreNameEnquirySvc
 	return &coreNameEnquirySvcClient{cc}
 }
 
-func (c *coreNameEnquirySvcClient) GetAccountHolderName(ctx context.Context, in *NameEnquiryRequest, opts ...grpc.CallOption) (*NameEnquiryResponse, error) {
-	out := new(NameEnquiryResponse)
+func (c *coreNameEnquirySvcClient) GetAccountHolderName(ctx context.Context, in *PaymentNameEnquiryRequest, opts ...grpc.CallOption) (*PaymentNameEnquiryResponse, error) {
+	out := new(PaymentNameEnquiryResponse)
 	err := c.cc.Invoke(ctx, CoreNameEnquirySvc_GetAccountHolderName_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -453,7 +177,7 @@ func (c *coreNameEnquirySvcClient) GetAccountHolderName(ctx context.Context, in 
 // All implementations must embed UnimplementedCoreNameEnquirySvcServer
 // for forward compatibility
 type CoreNameEnquirySvcServer interface {
-	GetAccountHolderName(context.Context, *NameEnquiryRequest) (*NameEnquiryResponse, error)
+	GetAccountHolderName(context.Context, *PaymentNameEnquiryRequest) (*PaymentNameEnquiryResponse, error)
 	mustEmbedUnimplementedCoreNameEnquirySvcServer()
 }
 
@@ -461,7 +185,7 @@ type CoreNameEnquirySvcServer interface {
 type UnimplementedCoreNameEnquirySvcServer struct {
 }
 
-func (UnimplementedCoreNameEnquirySvcServer) GetAccountHolderName(context.Context, *NameEnquiryRequest) (*NameEnquiryResponse, error) {
+func (UnimplementedCoreNameEnquirySvcServer) GetAccountHolderName(context.Context, *PaymentNameEnquiryRequest) (*PaymentNameEnquiryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountHolderName not implemented")
 }
 func (UnimplementedCoreNameEnquirySvcServer) mustEmbedUnimplementedCoreNameEnquirySvcServer() {}
@@ -478,7 +202,7 @@ func RegisterCoreNameEnquirySvcServer(s grpc.ServiceRegistrar, srv CoreNameEnqui
 }
 
 func _CoreNameEnquirySvc_GetAccountHolderName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NameEnquiryRequest)
+	in := new(PaymentNameEnquiryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -490,7 +214,7 @@ func _CoreNameEnquirySvc_GetAccountHolderName_Handler(srv interface{}, ctx conte
 		FullMethod: CoreNameEnquirySvc_GetAccountHolderName_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreNameEnquirySvcServer).GetAccountHolderName(ctx, req.(*NameEnquiryRequest))
+		return srv.(CoreNameEnquirySvcServer).GetAccountHolderName(ctx, req.(*PaymentNameEnquiryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
