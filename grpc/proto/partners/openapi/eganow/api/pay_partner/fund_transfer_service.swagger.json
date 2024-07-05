@@ -1,0 +1,869 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "eganow/api/pay_partner/fund_transfer_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "FundTransferSvc"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/qr/credit": {
+      "post": {
+        "operationId": "FundTransferSvc_QrCreditTransaction",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerFundTransferResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "TransferFundsRequest is the request message for the TransferFunds RPC.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerFundTransferRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      }
+    },
+    "/api/v1/qr/credit/web-service": {
+      "post": {
+        "summary": "QRC",
+        "operationId": "FundTransferSvc_QrCreditTransactionWebService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerWebServiceResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerQrCreditTransactionWebServiceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      }
+    },
+    "/api/v1/remittance/transfer": {
+      "post": {
+        "summary": "Remittance transfer funds.",
+        "operationId": "FundTransferSvc_RemittanceTransferFunds",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerFundTransferResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "RemittanceTransferFundsRequest is the request message for the RemittanceTransferFunds RPC.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerRemittanceTransferRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      }
+    },
+    "/api/v1/transactions/at-money/callback": {
+      "post": {
+        "operationId": "FundTransferSvc_AtMoneyTransactionCallback",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerPayPartnerEmpty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "AtMoneyTransactionCallbackRequest is the request message for the AtMoneyTransactionCallback RPC.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerAtMoneyTransactionCallbackRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      }
+    },
+    "/api/v1/transactions/collection-debit": {
+      "post": {
+        "summary": "Receive money from a customer.",
+        "operationId": "FundTransferSvc_CollectionDebitTransaction",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerFundTransferResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "TransferFundsRequest is the request message for the TransferFunds RPC.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerFundTransferRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      }
+    },
+    "/api/v1/transactions/mtn-momo/callback": {
+      "post": {
+        "summary": "MtnMomoTransactionCallback callback from the partner.",
+        "operationId": "FundTransferSvc_MtnMomoTransactionCallback",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerPayPartnerEmpty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "MtnMomoTransactionCallbackRequest is the request message for the MtnMomoTransactionCallback RPC.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerMtnMomoTransactionCallbackRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      },
+      "put": {
+        "summary": "MtnMomoTransactionCallback callback from the partner.",
+        "operationId": "FundTransferSvc_MtnMomoOpenApiTransactionCallback",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerPayPartnerEmpty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerMtnMomoOpenApiTransactionCallbackRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      }
+    },
+    "/api/v1/transactions/payout-credit": {
+      "post": {
+        "summary": "Send money to a customer.",
+        "operationId": "FundTransferSvc_PayoutCreditTransaction",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerFundTransferResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "TransferFundsRequest is the request message for the TransferFunds RPC.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerFundTransferRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      }
+    },
+    "/api/v1/transactions/reverse": {
+      "post": {
+        "operationId": "FundTransferSvc_ReverseTransaction",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerWebServiceResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerReverseTransactionRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      }
+    },
+    "/api/v1/transactions/rtp/callback": {
+      "post": {
+        "summary": "GhipssRTPTransactionCallback callback from the partner.",
+        "operationId": "FundTransferSvc_GhipssRTPTransactionCallback",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerPayPartnerEmpty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "GhipssRTPTransactionCallbackRequest is the request message for the MtnMomoTransactionCallback RPC.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerGhipssRTPTransactionCallbackRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      }
+    },
+    "/api/v1/transactions/status": {
+      "post": {
+        "summary": "Query transaction status.",
+        "operationId": "FundTransferSvc_QueryTransactionStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerStatusQueryResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "StatusQueryRequest is the request message for the StatusQuery RPC.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerStatusQueryRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FundTransferSvc"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "FundTransferRequestBankFundTransferRequest": {
+      "type": "object",
+      "properties": {
+        "sourceAccountNumber": {
+          "type": "string",
+          "title": "aka payer account number (for RTP)"
+        },
+        "sourceAccountName": {
+          "type": "string",
+          "title": "optional // aka payer name (for RTP)"
+        },
+        "destinationAccountNumber": {
+          "type": "string",
+          "title": "required for FTC"
+        },
+        "destinationAccountName": {
+          "type": "string",
+          "title": "optional"
+        },
+        "bankCode": {
+          "type": "string"
+        },
+        "qrcode": {
+          "type": "string",
+          "title": "optional (required for GHQR - GHIPSS)"
+        },
+        "terminalId": {
+          "type": "string",
+          "title": "optional (required for GHIPSS)"
+        },
+        "merchantId": {
+          "type": "string",
+          "description": "aka biller ID (required for RTP)",
+          "title": "additional field for RTP"
+        }
+      },
+      "required": [
+        "sourceAccountNumber",
+        "bankCode"
+      ]
+    },
+    "MtnMomoOpenApiTransactionCallbackRequestPayer": {
+      "type": "object",
+      "properties": {
+        "partyIdType": {
+          "type": "string"
+        },
+        "partyId": {
+          "type": "string"
+        }
+      }
+    },
+    "MtnMomoTransactionCallbackRequestReceiverInfo": {
+      "type": "object",
+      "properties": {
+        "fromFri": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "referenceid": {
+          "type": "string"
+        },
+        "communicationchannel": {
+          "type": "string"
+        }
+      }
+    },
+    "StatusQueryRequestBankStatusQueryRequest": {
+      "type": "object",
+      "properties": {
+        "transactionReferenceNumber": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "transactionReferenceNumber"
+      ]
+    },
+    "StatusQueryRequestMobileStatusQueryRequest": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "type": "string"
+        },
+        "transactionType": {
+          "$ref": "#/definitions/pay_partnerTransactionType"
+        }
+      },
+      "required": [
+        "transactionId",
+        "transactionType"
+      ]
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "pay_partnerAtMoneyTransactionCallbackRequest": {
+      "type": "object",
+      "properties": {
+        "transId": {
+          "type": "string",
+          "title": "numeric transaction id sent to the partner"
+        },
+        "transStatus": {
+          "type": "string"
+        },
+        "transRef": {
+          "type": "string",
+          "title": "external reference (from initial request)"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "description": "AtMoneyTransactionCallbackRequest is the request message for the AtMoneyTransactionCallback RPC."
+    },
+    "pay_partnerFundTransferRequest": {
+      "type": "object",
+      "properties": {
+        "transactionAmount": {
+          "type": "number",
+          "format": "float"
+        },
+        "taxAmount": {
+          "type": "number",
+          "format": "float"
+        },
+        "bankDetails": {
+          "$ref": "#/definitions/FundTransferRequestBankFundTransferRequest",
+          "title": "use this for GHIPSS"
+        },
+        "mobileNumber": {
+          "type": "string",
+          "title": "use this for MTN, VODAFONE, AIRTEL-TIGO"
+        },
+        "narration": {
+          "type": "string",
+          "title": "optional"
+        },
+        "currencyIso": {
+          "type": "string",
+          "title": "optional (defaults to GHS)"
+        },
+        "transactionReferenceNumber": {
+          "type": "string",
+          "title": "optional"
+        },
+        "payPartnerId": {
+          "type": "string"
+        },
+        "merchantServiceName": {
+          "type": "string",
+          "title": "required by MTN"
+        },
+        "merchantName": {
+          "type": "string",
+          "title": "required by MTN"
+        }
+      },
+      "description": "TransferFundsRequest is the request message for the TransferFunds RPC.",
+      "required": [
+        "transactionAmount",
+        "payPartnerId"
+      ]
+    },
+    "pay_partnerFundTransferResponse": {
+      "type": "object",
+      "properties": {
+        "transactionStatus": {
+          "type": "string"
+        },
+        "referenceNumber": {
+          "type": "string"
+        },
+        "responsePayloadJson": {
+          "type": "string",
+          "title": "JSON string of the response payload (required by Eganow Merchant API)"
+        },
+        "apiResponseMessage": {
+          "type": "string",
+          "title": "response message from the API"
+        }
+      },
+      "description": "TransferFundsResponse is the response message for the TransferFunds RPC."
+    },
+    "pay_partnerGhipssRTPTransactionCallbackRequest": {
+      "type": "object",
+      "properties": {
+        "billerId": {
+          "type": "string"
+        },
+        "billId": {
+          "type": "string"
+        },
+        "billDate": {
+          "type": "string"
+        },
+        "billAmount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "billDescription": {
+          "type": "string"
+        },
+        "payerName": {
+          "type": "string"
+        },
+        "payerInstitutionId": {
+          "type": "string"
+        },
+        "payerAccountNumber": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "requestTimestamp": {
+          "type": "string"
+        },
+        "requestSignature": {
+          "type": "string"
+        }
+      },
+      "description": "GhipssRTPTransactionCallbackRequest is the request message for the MtnMomoTransactionCallback RPC."
+    },
+    "pay_partnerMtnMomoOpenApiTransactionCallbackRequest": {
+      "type": "object",
+      "properties": {
+        "financialTransactionId": {
+          "type": "string"
+        },
+        "externalId": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "payer": {
+          "$ref": "#/definitions/MtnMomoOpenApiTransactionCallbackRequestPayer"
+        },
+        "payerMessage": {
+          "type": "string"
+        },
+        "payeeNote": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "pay_partnerMtnMomoTransactionCallbackRequest": {
+      "type": "object",
+      "properties": {
+        "receiverInfo": {
+          "$ref": "#/definitions/MtnMomoTransactionCallbackRequestReceiverInfo"
+        },
+        "transactionid": {
+          "type": "string"
+        },
+        "externaltransactionid": {
+          "type": "string"
+        }
+      },
+      "description": "MtnMomoTransactionCallbackRequest is the request message for the MtnMomoTransactionCallback RPC."
+    },
+    "pay_partnerPayPartnerEmpty": {
+      "type": "object"
+    },
+    "pay_partnerQrCreditTransactionWebServiceRequest": {
+      "type": "object",
+      "properties": {
+        "senderAccount": {
+          "type": "string"
+        },
+        "Sendername": {
+          "type": "string"
+        },
+        "senderInstitution": {
+          "type": "string"
+        },
+        "receiverAccount": {
+          "type": "string"
+        },
+        "transactionAmount": {
+          "type": "string"
+        },
+        "narration": {
+          "type": "string"
+        },
+        "externalRef": {
+          "type": "string"
+        },
+        "trackingNum": {
+          "type": "string"
+        },
+        "transactionDate": {
+          "type": "string"
+        },
+        "qrCode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "senderAccount",
+        "Sendername",
+        "senderInstitution",
+        "receiverAccount",
+        "transactionAmount",
+        "narration",
+        "externalRef",
+        "trackingNum",
+        "transactionDate",
+        "qrCode"
+      ]
+    },
+    "pay_partnerRemittanceTransferRequest": {
+      "type": "object",
+      "properties": {
+        "transactionAmount": {
+          "type": "number",
+          "format": "float"
+        },
+        "sourceAccountNumber": {
+          "type": "string"
+        },
+        "sourceAccountName": {
+          "type": "string",
+          "title": "optional"
+        },
+        "destinationAccountNumber": {
+          "type": "string"
+        },
+        "destinationAccountName": {
+          "type": "string",
+          "title": "optional"
+        },
+        "countryName": {
+          "type": "string",
+          "title": "must be FRA,ITL,ENG,GHA. (3 characters)"
+        },
+        "bankCode": {
+          "type": "string"
+        },
+        "narration": {
+          "type": "string",
+          "title": "optional"
+        },
+        "transactionReferenceNumber": {
+          "type": "string"
+        }
+      },
+      "description": "RemittanceTransferFundsRequest is the request message for the RemittanceTransferFunds RPC.",
+      "required": [
+        "transactionAmount",
+        "sourceAccountNumber",
+        "destinationAccountNumber",
+        "countryName",
+        "bankCode"
+      ]
+    },
+    "pay_partnerReverseTransactionRequest": {
+      "type": "object",
+      "properties": {
+        "senderInstitution": {
+          "type": "string"
+        },
+        "transactionAmount": {
+          "type": "string"
+        },
+        "externalRef": {
+          "type": "string"
+        },
+        "trackingNum": {
+          "type": "string"
+        },
+        "reversalDate": {
+          "type": "string"
+        },
+        "transactionId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "senderInstitution",
+        "transactionAmount",
+        "externalRef",
+        "trackingNum",
+        "reversalDate",
+        "transactionId"
+      ]
+    },
+    "pay_partnerStatusQueryRequest": {
+      "type": "object",
+      "properties": {
+        "bankDetails": {
+          "$ref": "#/definitions/StatusQueryRequestBankStatusQueryRequest"
+        },
+        "mobileDetails": {
+          "$ref": "#/definitions/StatusQueryRequestMobileStatusQueryRequest"
+        }
+      },
+      "description": "StatusQueryRequest is the request message for the StatusQuery RPC.",
+      "required": [
+        "bankDetails",
+        "mobileDetails"
+      ]
+    },
+    "pay_partnerStatusQueryResponse": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "title": "status iof the transaction"
+        }
+      },
+      "description": "StatusQueryResponse is the response message for the StatusQuery RPC."
+    },
+    "pay_partnerTransactionType": {
+      "type": "string",
+      "enum": [
+        "COLLECTION",
+        "PAYOUT",
+        "REMITTANCE",
+        "QR_CREDIT"
+      ],
+      "default": "COLLECTION",
+      "title": "- REMITTANCE: for remittance (GHIPSS)\n - QR_CREDIT: for QR code credit transactions"
+    },
+    "pay_partnerWebServiceResponse": {
+      "type": "object",
+      "properties": {
+        "errorCode": {
+          "type": "string"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "externalRef": {
+          "type": "string"
+        },
+        "transactionId": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+        }
+      },
+      "additionalProperties": {},
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+    }
+  }
+}

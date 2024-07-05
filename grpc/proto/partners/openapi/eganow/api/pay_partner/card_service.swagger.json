@@ -1,0 +1,478 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "eganow/api/pay_partner/card_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "CardSvc"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/cards": {
+      "post": {
+        "summary": "CreateCard creates a new card (create client, create account and then create card)",
+        "operationId": "CardSvc_CreateCard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerCreateCardResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerCreateCardRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CardSvc"
+        ]
+      }
+    },
+    "/api/v1/cards/details": {
+      "post": {
+        "summary": "GetCardDetails returns the details of a card",
+        "operationId": "CardSvc_GetCardDetails",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerGetCardResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerGetCardRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CardSvc"
+        ]
+      }
+    },
+    "/api/v1/cards/transactions": {
+      "post": {
+        "summary": "GetCardTransactions returns the transactions made on a card",
+        "operationId": "CardSvc_GetCardTransactions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pay_partnerCardTransactionList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pay_partnerGetCardTransactionsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CardSvc"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "pay_partnerAddresses": {
+      "type": "object",
+      "properties": {
+        "addressType": {
+          "type": "string"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "addressLine3": {
+          "type": "string"
+        },
+        "addressLine4": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        }
+      }
+    },
+    "pay_partnerBankDetails": {
+      "type": "object",
+      "properties": {
+        "accountNumber": {
+          "type": "string"
+        },
+        "branchCode": {
+          "type": "string"
+        }
+      }
+    },
+    "pay_partnerCardTransaction": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "transaction id"
+        },
+        "date": {
+          "type": "string",
+          "title": "transaction date (YYYY-MM-DD)"
+        },
+        "type": {
+          "type": "string",
+          "title": "transaction type"
+        },
+        "amount": {
+          "type": "number",
+          "format": "float",
+          "title": "transaction amount"
+        },
+        "currency": {
+          "type": "string",
+          "title": "transaction currency"
+        },
+        "description": {
+          "type": "string",
+          "title": "transaction description"
+        }
+      }
+    },
+    "pay_partnerCardTransactionList": {
+      "type": "object",
+      "properties": {
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pay_partnerCardTransaction"
+          },
+          "title": "list of transactions"
+        }
+      }
+    },
+    "pay_partnerCardType": {
+      "type": "string",
+      "enum": [
+        "cardNumber",
+        "externalCardId",
+        "cardGUID"
+      ],
+      "default": "cardNumber"
+    },
+    "pay_partnerContactDetails": {
+      "type": "object",
+      "properties": {
+        "homPhone": {
+          "type": "string"
+        },
+        "workPhone": {
+          "type": "string"
+        },
+        "mobilePhone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "pay_partnerCreateCardRequest": {
+      "type": "object",
+      "properties": {
+        "personalDetail": {
+          "$ref": "#/definitions/pay_partnerPersonalDetails"
+        },
+        "contactDetail": {
+          "$ref": "#/definitions/pay_partnerContactDetails"
+        },
+        "employmentDetail": {
+          "$ref": "#/definitions/pay_partnerEmploymentDetails"
+        },
+        "identityProofDocument": {
+          "$ref": "#/definitions/pay_partnerIdentityProofDocument"
+        },
+        "isVirtual": {
+          "type": "boolean"
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pay_partnerAddresses"
+          }
+        },
+        "bankDetail": {
+          "$ref": "#/definitions/pay_partnerBankDetails"
+        },
+        "clientId": {
+          "type": "string",
+          "title": "a 9-digit generated client ID unique for each user"
+        }
+      }
+    },
+    "pay_partnerCreateCardResponse": {
+      "type": "object",
+      "properties": {
+        "cardActivationDate": {
+          "type": "string"
+        },
+        "cardDateOpen": {
+          "type": "string"
+        },
+        "cardExpiryDate": {
+          "type": "string"
+        },
+        "cardRole": {
+          "type": "string"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "externalCardId": {
+          "type": "string"
+        },
+        "isVirtual": {
+          "type": "boolean"
+        },
+        "maskedCardNumber": {
+          "type": "string"
+        },
+        "productCode": {
+          "type": "string"
+        }
+      }
+    },
+    "pay_partnerEmploymentDetails": {
+      "type": "object",
+      "properties": {
+        "employerName": {
+          "type": "string"
+        },
+        "income": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "occupation": {
+          "type": "string"
+        }
+      }
+    },
+    "pay_partnerGetCardRequest": {
+      "type": "object",
+      "properties": {
+        "cardNumber": {
+          "type": "string",
+          "title": "card number (25 chars)"
+        },
+        "cardType": {
+          "$ref": "#/definitions/pay_partnerCardType"
+        }
+      },
+      "required": [
+        "cardNumber",
+        "cardType"
+      ]
+    },
+    "pay_partnerGetCardResponse": {
+      "type": "object",
+      "properties": {
+        "cardHolderName": {
+          "type": "string",
+          "title": "card holder name"
+        },
+        "activationDate": {
+          "type": "string",
+          "title": "date of card activation (YYYY-MM-DD)"
+        },
+        "expiryDate": {
+          "type": "string",
+          "title": "date of card expiry (YYYY-MM-DD)"
+        },
+        "maskedCardNumber": {
+          "type": "string",
+          "title": "masked card number (1234********1234)"
+        },
+        "isVirtual": {
+          "type": "boolean",
+          "title": "is virtual card"
+        }
+      }
+    },
+    "pay_partnerGetCardTransactionsRequest": {
+      "type": "object",
+      "properties": {
+        "cardNumber": {
+          "type": "string",
+          "title": "card number (25 chars)"
+        },
+        "cardType": {
+          "$ref": "#/definitions/pay_partnerCardType"
+        },
+        "startDate": {
+          "type": "string",
+          "title": "start date of transactions (YYYY-MM-DD)"
+        },
+        "endDate": {
+          "type": "string",
+          "title": "end date of transactions (YYYY-MM-DD)"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "title": "page number (default to 1 if not provided)"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "page size (default to 50 if not provided)"
+        }
+      },
+      "required": [
+        "cardNumber",
+        "cardType",
+        "startDate"
+      ]
+    },
+    "pay_partnerIdentityProofDocument": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "expiryDate": {
+          "type": "string"
+        }
+      }
+    },
+    "pay_partnerPersonalDetails": {
+      "type": "object",
+      "properties": {
+        "gender": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
+        "citizenship": {
+          "type": "string"
+        },
+        "maritalStatus": {
+          "type": "string"
+        },
+        "dateOfBirth": {
+          "type": "string"
+        },
+        "placeOfBirth": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "motherName": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+        }
+      },
+      "additionalProperties": {},
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+    }
+  }
+}
