@@ -1,3 +1,6 @@
-[submodule "protos"]
-	path = protos
+[submodule "protos/core"]
+	path = protos/core
 	url = https://github.com/EGANOW-CORE-SERVICES/EGANOW-CORE-PROTOS.git
+[submodule "protos/partners"]
+	path = protos/partners
+	url = https://github.com/EGANOW-PARTNER-INTEGRATION-SERVICES/EGANOW-INTEGRATION-PROTOS.git

@@ -20,15 +20,15 @@ func NewPayPartnerConnectionFromVault(cfg *payPartnerServiceIDFromVault) *PayPar
 			},
 			PospayMadApi: &partnerServiceConfig{
 				ServiceID:   cfg.MtnConfig.PospayMadApi,
-				ServiceAddr: "mtnpospaymadapi",
+				ServiceAddr: "mtngh-pospay.uat",
 			},
 			EgapayOpenApi: &partnerServiceConfig{
 				ServiceID:   cfg.MtnConfig.EgapayOpenApi,
-				ServiceAddr: "mtnegapayopenapi",
+				ServiceAddr: "mtngh-egapay.uat",
 			},
 			PospayOpenApi: &partnerServiceConfig{
 				ServiceID:   cfg.MtnConfig.PospayOpenApi,
-				ServiceAddr: "mtnpospayopenapi",
+				ServiceAddr: "mtngh-pospay.uat",
 			},
 		},
 		TelecelConfig: &generalPartnerConfig{
@@ -44,16 +44,16 @@ func NewPayPartnerConnectionFromVault(cfg *payPartnerServiceIDFromVault) *PayPar
 		AirtelConfig: &generalPartnerConfig{
 			Egapay: &partnerServiceConfig{
 				ServiceID:   cfg.AirtelConfig.Egapay,
-				ServiceAddr: "airtelegapay",
+				ServiceAddr: "atgh-egapay.uat",
 			},
 			Pospay: &partnerServiceConfig{
 				ServiceID:   cfg.AirtelConfig.Pospay,
-				ServiceAddr: "airtelpospay",
+				ServiceAddr: "atgh-pospay.uat",
 			},
 		},
 		GhipssConfig: &partnerServiceConfig{
 			ServiceID:   cfg.GhipssConfig,
-			ServiceAddr: "ghipss",
+			ServiceAddr: "ghipss-egapay.uat",
 		},
 	}
 }
@@ -112,19 +112,19 @@ func structToMap(obj interface{}) map[string]interface{} {
 	result := make(map[string]interface{})
 	value := reflect.ValueOf(obj)
 	typ := reflect.TypeOf(obj)
-	
+
 	for i := 0; i < value.NumField(); i++ {
 		field := value.Field(i)
 		fieldType := typ.Field(i)
 		fieldName := fieldType.Name
-		
+
 		if field.Kind() == reflect.Ptr && !field.IsNil() {
 			result[fieldName] = structToMap(field.Elem().Interface())
 		} else {
 			result[fieldName] = field.Interface()
 		}
 	}
-	
+
 	return result
 }
 
