@@ -211,7 +211,7 @@ type PaymentNameEnquiryRequest struct {
 
 	// Types that are assignable to AccountNumber:
 	//
-	//	*PaymentNameEnquiryRequest_BankNameEnquiryRequest_
+	//	*PaymentNameEnquiryRequest_BankAccountNameRequest
 	//	*PaymentNameEnquiryRequest_PhoneNumber
 	AccountNumber       isPaymentNameEnquiryRequest_AccountNumber `protobuf_oneof:"account_number"`
 	PayPartnerServiceId string                                    `protobuf:"bytes,5,opt,name=pay_partner_service_id,json=payPartnerServiceId,proto3" json:"pay_partner_service_id,omitempty"`
@@ -256,9 +256,9 @@ func (m *PaymentNameEnquiryRequest) GetAccountNumber() isPaymentNameEnquiryReque
 	return nil
 }
 
-func (x *PaymentNameEnquiryRequest) GetBankNameEnquiryRequest() *PaymentNameEnquiryRequest_BankNameEnquiryRequest {
-	if x, ok := x.GetAccountNumber().(*PaymentNameEnquiryRequest_BankNameEnquiryRequest_); ok {
-		return x.BankNameEnquiryRequest
+func (x *PaymentNameEnquiryRequest) GetBankAccountNameRequest() *PaymentNameEnquiryRequest_BankNameEnquiryRequest {
+	if x, ok := x.GetAccountNumber().(*PaymentNameEnquiryRequest_BankAccountNameRequest); ok {
+		return x.BankAccountNameRequest
 	}
 	return nil
 }
@@ -281,15 +281,15 @@ type isPaymentNameEnquiryRequest_AccountNumber interface {
 	isPaymentNameEnquiryRequest_AccountNumber()
 }
 
-type PaymentNameEnquiryRequest_BankNameEnquiryRequest_ struct {
-	BankNameEnquiryRequest *PaymentNameEnquiryRequest_BankNameEnquiryRequest `protobuf:"bytes,2,opt,name=bank_name_enquiry_request,json=bankNameEnquiryRequest,proto3,oneof"`
+type PaymentNameEnquiryRequest_BankAccountNameRequest struct {
+	BankAccountNameRequest *PaymentNameEnquiryRequest_BankNameEnquiryRequest `protobuf:"bytes,2,opt,name=bank_account_name_request,json=bankAccountNameRequest,proto3,oneof"`
 }
 
 type PaymentNameEnquiryRequest_PhoneNumber struct {
 	PhoneNumber string `protobuf:"bytes,3,opt,name=phone_number,json=phoneNumber,proto3,oneof"`
 }
 
-func (*PaymentNameEnquiryRequest_BankNameEnquiryRequest_) isPaymentNameEnquiryRequest_AccountNumber() {
+func (*PaymentNameEnquiryRequest_BankAccountNameRequest) isPaymentNameEnquiryRequest_AccountNumber() {
 }
 
 func (*PaymentNameEnquiryRequest_PhoneNumber) isPaymentNameEnquiryRequest_AccountNumber() {}
@@ -602,14 +602,14 @@ var file_eganow_api_payment_payment_payload_proto_rawDesc = []byte{
 	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x22, 0xba, 0x05, 0x0a, 0x19, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65,
 	0x45, 0x6e, 0x71, 0x75, 0x69, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x81,
-	0x01, 0x0a, 0x19, 0x62, 0x61, 0x6e, 0x6b, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x5f, 0x65, 0x6e, 0x71,
-	0x75, 0x69, 0x72, 0x79, 0x5f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x18, 0x02, 0x20, 0x01,
+	0x01, 0x0a, 0x19, 0x62, 0x61, 0x6e, 0x6b, 0x5f, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x5f,
+	0x6e, 0x61, 0x6d, 0x65, 0x5f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x18, 0x02, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x44, 0x2e, 0x65, 0x67, 0x61, 0x6e, 0x6f, 0x77, 0x2e, 0x61, 0x70, 0x69, 0x2e,
 	0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x4e,
 	0x61, 0x6d, 0x65, 0x45, 0x6e, 0x71, 0x75, 0x69, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x2e, 0x42, 0x61, 0x6e, 0x6b, 0x4e, 0x61, 0x6d, 0x65, 0x45, 0x6e, 0x71, 0x75, 0x69, 0x72,
 	0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x48, 0x00, 0x52, 0x16, 0x62, 0x61, 0x6e, 0x6b,
-	0x4e, 0x61, 0x6d, 0x65, 0x45, 0x6e, 0x71, 0x75, 0x69, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x12, 0x28, 0x0a, 0x0c, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x62,
 	0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x42, 0x03, 0xe0, 0x41, 0x02, 0x48, 0x00, 0x52,
 	0x0b, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x38, 0x0a, 0x16,
@@ -681,7 +681,7 @@ var file_eganow_api_payment_payment_payload_proto_goTypes = []interface{}{
 var file_eganow_api_payment_payment_payload_proto_depIdxs = []int32{
 	5, // 0: eganow.api.payment.PaymentMoneyTransferRequest.source_info:type_name -> eganow.api.payment.PaymentMoneyTransferRequest.PaymentInfo
 	5, // 1: eganow.api.payment.PaymentMoneyTransferRequest.beneficiary_info:type_name -> eganow.api.payment.PaymentMoneyTransferRequest.PaymentInfo
-	6, // 2: eganow.api.payment.PaymentNameEnquiryRequest.bank_name_enquiry_request:type_name -> eganow.api.payment.PaymentNameEnquiryRequest.BankNameEnquiryRequest
+	6, // 2: eganow.api.payment.PaymentNameEnquiryRequest.bank_account_name_request:type_name -> eganow.api.payment.PaymentNameEnquiryRequest.BankNameEnquiryRequest
 	0, // 3: eganow.api.payment.PaymentNameEnquiryRequest.BankNameEnquiryRequest.request_type:type_name -> eganow.api.payment.PaymentNameEnquiryRequest.RequestType
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
@@ -770,7 +770,7 @@ func file_eganow_api_payment_payment_payload_proto_init() {
 		}
 	}
 	file_eganow_api_payment_payment_payload_proto_msgTypes[2].OneofWrappers = []interface{}{
-		(*PaymentNameEnquiryRequest_BankNameEnquiryRequest_)(nil),
+		(*PaymentNameEnquiryRequest_BankAccountNameRequest)(nil),
 		(*PaymentNameEnquiryRequest_PhoneNumber)(nil),
 	}
 	file_eganow_api_payment_payment_payload_proto_msgTypes[3].OneofWrappers = []interface{}{
