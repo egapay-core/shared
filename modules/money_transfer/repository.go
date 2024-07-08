@@ -21,6 +21,7 @@ const (
 
 type IMoneyTransferRepository interface {
 	GetAccountHolder(context.Context, *cpb.PaymentNameEnquiryRequest) (*cpb.PaymentStringValue, error)
+	GetGhQrAccountHolder(context.Context, *cpb.PaymentGhQrNameEnquiryRequest) (*cpb.PaymentStringValue, error)
 	CollectMoney(context.Context, *cpb.PaymentMoneyTransferRequest) (*cpb.PaymentMoneyTransferResponse, error)
 	PayoutMoney(context.Context, *cpb.PaymentMoneyTransferRequest) (*cpb.PaymentMoneyTransferResponse, error)
 	CheckTransactionStatus(context.Context, StatusQuerySource, *cpb.PaymentStatusQueryRequest) (string, error)
@@ -47,30 +48,45 @@ func (r *moneyTransferRepository) GetAccountHolder(ctx context.Context, req *cpb
 	if err != nil {
 		return nil, err
 	}
-	
+
 	conn, err := client.CreateSecureGrpcConnection(context.Background(), addr)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	neqClient := cpb.NewCoreNameEnquirySvcClient(conn)
 	return neqClient.GetAccountHolderName(ctx, req)
 }
 
+func (r *moneyTransferRepository) GetGhQrAccountHolder(ctx context.Context, req *cpb.PaymentGhQrNameEnquiryRequest) (*cpb.PaymentStringValue, error) {
+	addr, err := r.sharedRepo.GetConnectionForGhQrNameEnquiryClient(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	conn, err := client.CreateSecureGrpcConnection(context.Background(), addr)
+	if err != nil {
+		return nil, err
+	}
+
+	neqClient := cpb.NewCoreNameEnquirySvcClient(conn)
+	return neqClient.GetGhQrAccountHolderName(ctx, req)
+}
+
 func (*moneyTransferRepository) CollectMoney(ctx context.Context, req *cpb.PaymentMoneyTransferRequest) (*cpb.PaymentMoneyTransferResponse, error) {
 	// @todo - implement this method
-	
+
 	return nil, status.Error(codes.Unimplemented, "method not implemented yet")
 }
 
 func (*moneyTransferRepository) PayoutMoney(ctx context.Context, req *cpb.PaymentMoneyTransferRequest) (*cpb.PaymentMoneyTransferResponse, error) {
 	// @todo - implement this method
-	
+
 	return nil, status.Error(codes.Unimplemented, "method not implemented yet")
 }
 
 func (*moneyTransferRepository) CheckTransactionStatus(context.Context, StatusQuerySource, *cpb.PaymentStatusQueryRequest) (string, error) {
 	// @todo - implement this method
-	
+
 	return "", status.Error(codes.Unimplemented, "method not implemented yet")
 }
