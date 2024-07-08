@@ -21,6 +21,7 @@ const (
 type ISharedRepository interface {
 	// GetConnectionForNameEnquiryClient returns the connection string for a pay partner grpc client
 	GetConnectionForNameEnquiryClient(context.Context, *pb.PaymentNameEnquiryRequest) (string, error)
+	GetConnectionForStatusQueryClient(context.Context, *pb.PaymentStatusQueryRequest) (string, error)
 }
 
 type sharedRepository struct {
@@ -41,6 +42,23 @@ func NewSharedRepository(ks *vault.KeyStoreConfig) ISharedRepository {
 }
 
 func (r *sharedRepository) GetConnectionForNameEnquiryClient(ctx context.Context, req *pb.PaymentNameEnquiryRequest) (string, error) {
+	// load hash from cache
+	hashed, err := r.rdb.GetAllFromHash(ctx, fmt.Sprintf("%s:%s", payPartnerCacheKeyPrefix, req.GetPayPartnerServiceId()))
+	if err != nil {
+		log.Printf("failed to get hash from cache: %v", err)
+		return "", err
+	}
+	var config partnerServiceConfig
+	if err = mapToStruct(hashed, &config); err != nil {
+		log.Printf("failed to map hash to struct: %v", err)
+		return "", err
+	}
+
+	// get connection string
+	return fmt.Sprintf("%s.%s:%s", config.ServiceAddr, r.ks.PayPartnerServices.Host, r.ks.PayPartnerServices.Port), nil
+}
+
+func (r *sharedRepository) GetConnectionForStatusQueryClient(ctx context.Context, req *pb.PaymentStatusQueryRequest) (string, error) {
 	// load hash from cache
 	hashed, err := r.rdb.GetAllFromHash(ctx, fmt.Sprintf("%s:%s", payPartnerCacheKeyPrefix, req.GetPayPartnerServiceId()))
 	if err != nil {
