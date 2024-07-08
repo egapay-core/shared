@@ -18,91 +18,180 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-const (
-	CoreEganowAppMoneyTransferGatewaySvc_GetAccountHolderName_FullMethodName = "/eganow.api.gateway.eganow_app.CoreEganowAppMoneyTransferGatewaySvc/GetAccountHolderName"
-)
+const ()
 
-// CoreEganowAppMoneyTransferGatewaySvcClient is the client API for CoreEganowAppMoneyTransferGatewaySvc service.
+// CoreEganowAppGatewayMoneyTransferSvcClient is the client API for CoreEganowAppGatewayMoneyTransferSvc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CoreEganowAppMoneyTransferGatewaySvcClient interface {
-	GetAccountHolderName(ctx context.Context, in *EganowAppGatewayNameEnquiryRequest, opts ...grpc.CallOption) (*EganowAppGatewayNameEnquiryResponse, error)
+type CoreEganowAppGatewayMoneyTransferSvcClient interface {
 }
 
-type coreEganowAppMoneyTransferGatewaySvcClient struct {
+type coreEganowAppGatewayMoneyTransferSvcClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCoreEganowAppMoneyTransferGatewaySvcClient(cc grpc.ClientConnInterface) CoreEganowAppMoneyTransferGatewaySvcClient {
-	return &coreEganowAppMoneyTransferGatewaySvcClient{cc}
+func NewCoreEganowAppGatewayMoneyTransferSvcClient(cc grpc.ClientConnInterface) CoreEganowAppGatewayMoneyTransferSvcClient {
+	return &coreEganowAppGatewayMoneyTransferSvcClient{cc}
 }
 
-func (c *coreEganowAppMoneyTransferGatewaySvcClient) GetAccountHolderName(ctx context.Context, in *EganowAppGatewayNameEnquiryRequest, opts ...grpc.CallOption) (*EganowAppGatewayNameEnquiryResponse, error) {
-	out := new(EganowAppGatewayNameEnquiryResponse)
-	err := c.cc.Invoke(ctx, CoreEganowAppMoneyTransferGatewaySvc_GetAccountHolderName_FullMethodName, in, out, opts...)
+// CoreEganowAppGatewayMoneyTransferSvcServer is the server API for CoreEganowAppGatewayMoneyTransferSvc service.
+// All implementations must embed UnimplementedCoreEganowAppGatewayMoneyTransferSvcServer
+// for forward compatibility
+type CoreEganowAppGatewayMoneyTransferSvcServer interface {
+	mustEmbedUnimplementedCoreEganowAppGatewayMoneyTransferSvcServer()
+}
+
+// UnimplementedCoreEganowAppGatewayMoneyTransferSvcServer must be embedded to have forward compatible implementations.
+type UnimplementedCoreEganowAppGatewayMoneyTransferSvcServer struct {
+}
+
+func (UnimplementedCoreEganowAppGatewayMoneyTransferSvcServer) mustEmbedUnimplementedCoreEganowAppGatewayMoneyTransferSvcServer() {
+}
+
+// UnsafeCoreEganowAppGatewayMoneyTransferSvcServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CoreEganowAppGatewayMoneyTransferSvcServer will
+// result in compilation errors.
+type UnsafeCoreEganowAppGatewayMoneyTransferSvcServer interface {
+	mustEmbedUnimplementedCoreEganowAppGatewayMoneyTransferSvcServer()
+}
+
+func RegisterCoreEganowAppGatewayMoneyTransferSvcServer(s grpc.ServiceRegistrar, srv CoreEganowAppGatewayMoneyTransferSvcServer) {
+	s.RegisterService(&CoreEganowAppGatewayMoneyTransferSvc_ServiceDesc, srv)
+}
+
+// CoreEganowAppGatewayMoneyTransferSvc_ServiceDesc is the grpc.ServiceDesc for CoreEganowAppGatewayMoneyTransferSvc service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var CoreEganowAppGatewayMoneyTransferSvc_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "eganow.api.gateway.eganow_app.CoreEganowAppGatewayMoneyTransferSvc",
+	HandlerType: (*CoreEganowAppGatewayMoneyTransferSvcServer)(nil),
+	Methods:     []grpc.MethodDesc{},
+	Streams:     []grpc.StreamDesc{},
+	Metadata:    "eganow/api/gateway/eganow_app/money_transfer_service.proto",
+}
+
+const (
+	CoreEganowAppGatewayNameEnquirySvc_GetAccountHolderName_FullMethodName     = "/eganow.api.gateway.eganow_app.CoreEganowAppGatewayNameEnquirySvc/GetAccountHolderName"
+	CoreEganowAppGatewayNameEnquirySvc_GetGhQrAccountHolderName_FullMethodName = "/eganow.api.gateway.eganow_app.CoreEganowAppGatewayNameEnquirySvc/GetGhQrAccountHolderName"
+)
+
+// CoreEganowAppGatewayNameEnquirySvcClient is the client API for CoreEganowAppGatewayNameEnquirySvc service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type CoreEganowAppGatewayNameEnquirySvcClient interface {
+	GetAccountHolderName(ctx context.Context, in *EganowAppGatewayNameEnquiryRequest, opts ...grpc.CallOption) (*EganowAppGatewayStringValue, error)
+	GetGhQrAccountHolderName(ctx context.Context, in *EganowAppGatewayGhQrNameEnquiryRequest, opts ...grpc.CallOption) (*EganowAppGatewayStringValue, error)
+}
+
+type coreEganowAppGatewayNameEnquirySvcClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewCoreEganowAppGatewayNameEnquirySvcClient(cc grpc.ClientConnInterface) CoreEganowAppGatewayNameEnquirySvcClient {
+	return &coreEganowAppGatewayNameEnquirySvcClient{cc}
+}
+
+func (c *coreEganowAppGatewayNameEnquirySvcClient) GetAccountHolderName(ctx context.Context, in *EganowAppGatewayNameEnquiryRequest, opts ...grpc.CallOption) (*EganowAppGatewayStringValue, error) {
+	out := new(EganowAppGatewayStringValue)
+	err := c.cc.Invoke(ctx, CoreEganowAppGatewayNameEnquirySvc_GetAccountHolderName_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CoreEganowAppMoneyTransferGatewaySvcServer is the server API for CoreEganowAppMoneyTransferGatewaySvc service.
-// All implementations must embed UnimplementedCoreEganowAppMoneyTransferGatewaySvcServer
+func (c *coreEganowAppGatewayNameEnquirySvcClient) GetGhQrAccountHolderName(ctx context.Context, in *EganowAppGatewayGhQrNameEnquiryRequest, opts ...grpc.CallOption) (*EganowAppGatewayStringValue, error) {
+	out := new(EganowAppGatewayStringValue)
+	err := c.cc.Invoke(ctx, CoreEganowAppGatewayNameEnquirySvc_GetGhQrAccountHolderName_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CoreEganowAppGatewayNameEnquirySvcServer is the server API for CoreEganowAppGatewayNameEnquirySvc service.
+// All implementations must embed UnimplementedCoreEganowAppGatewayNameEnquirySvcServer
 // for forward compatibility
-type CoreEganowAppMoneyTransferGatewaySvcServer interface {
-	GetAccountHolderName(context.Context, *EganowAppGatewayNameEnquiryRequest) (*EganowAppGatewayNameEnquiryResponse, error)
-	mustEmbedUnimplementedCoreEganowAppMoneyTransferGatewaySvcServer()
+type CoreEganowAppGatewayNameEnquirySvcServer interface {
+	GetAccountHolderName(context.Context, *EganowAppGatewayNameEnquiryRequest) (*EganowAppGatewayStringValue, error)
+	GetGhQrAccountHolderName(context.Context, *EganowAppGatewayGhQrNameEnquiryRequest) (*EganowAppGatewayStringValue, error)
+	mustEmbedUnimplementedCoreEganowAppGatewayNameEnquirySvcServer()
 }
 
-// UnimplementedCoreEganowAppMoneyTransferGatewaySvcServer must be embedded to have forward compatible implementations.
-type UnimplementedCoreEganowAppMoneyTransferGatewaySvcServer struct {
+// UnimplementedCoreEganowAppGatewayNameEnquirySvcServer must be embedded to have forward compatible implementations.
+type UnimplementedCoreEganowAppGatewayNameEnquirySvcServer struct {
 }
 
-func (UnimplementedCoreEganowAppMoneyTransferGatewaySvcServer) GetAccountHolderName(context.Context, *EganowAppGatewayNameEnquiryRequest) (*EganowAppGatewayNameEnquiryResponse, error) {
+func (UnimplementedCoreEganowAppGatewayNameEnquirySvcServer) GetAccountHolderName(context.Context, *EganowAppGatewayNameEnquiryRequest) (*EganowAppGatewayStringValue, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountHolderName not implemented")
 }
-func (UnimplementedCoreEganowAppMoneyTransferGatewaySvcServer) mustEmbedUnimplementedCoreEganowAppMoneyTransferGatewaySvcServer() {
+func (UnimplementedCoreEganowAppGatewayNameEnquirySvcServer) GetGhQrAccountHolderName(context.Context, *EganowAppGatewayGhQrNameEnquiryRequest) (*EganowAppGatewayStringValue, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGhQrAccountHolderName not implemented")
+}
+func (UnimplementedCoreEganowAppGatewayNameEnquirySvcServer) mustEmbedUnimplementedCoreEganowAppGatewayNameEnquirySvcServer() {
 }
 
-// UnsafeCoreEganowAppMoneyTransferGatewaySvcServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CoreEganowAppMoneyTransferGatewaySvcServer will
+// UnsafeCoreEganowAppGatewayNameEnquirySvcServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CoreEganowAppGatewayNameEnquirySvcServer will
 // result in compilation errors.
-type UnsafeCoreEganowAppMoneyTransferGatewaySvcServer interface {
-	mustEmbedUnimplementedCoreEganowAppMoneyTransferGatewaySvcServer()
+type UnsafeCoreEganowAppGatewayNameEnquirySvcServer interface {
+	mustEmbedUnimplementedCoreEganowAppGatewayNameEnquirySvcServer()
 }
 
-func RegisterCoreEganowAppMoneyTransferGatewaySvcServer(s grpc.ServiceRegistrar, srv CoreEganowAppMoneyTransferGatewaySvcServer) {
-	s.RegisterService(&CoreEganowAppMoneyTransferGatewaySvc_ServiceDesc, srv)
+func RegisterCoreEganowAppGatewayNameEnquirySvcServer(s grpc.ServiceRegistrar, srv CoreEganowAppGatewayNameEnquirySvcServer) {
+	s.RegisterService(&CoreEganowAppGatewayNameEnquirySvc_ServiceDesc, srv)
 }
 
-func _CoreEganowAppMoneyTransferGatewaySvc_GetAccountHolderName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CoreEganowAppGatewayNameEnquirySvc_GetAccountHolderName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EganowAppGatewayNameEnquiryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CoreEganowAppMoneyTransferGatewaySvcServer).GetAccountHolderName(ctx, in)
+		return srv.(CoreEganowAppGatewayNameEnquirySvcServer).GetAccountHolderName(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CoreEganowAppMoneyTransferGatewaySvc_GetAccountHolderName_FullMethodName,
+		FullMethod: CoreEganowAppGatewayNameEnquirySvc_GetAccountHolderName_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreEganowAppMoneyTransferGatewaySvcServer).GetAccountHolderName(ctx, req.(*EganowAppGatewayNameEnquiryRequest))
+		return srv.(CoreEganowAppGatewayNameEnquirySvcServer).GetAccountHolderName(ctx, req.(*EganowAppGatewayNameEnquiryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// CoreEganowAppMoneyTransferGatewaySvc_ServiceDesc is the grpc.ServiceDesc for CoreEganowAppMoneyTransferGatewaySvc service.
+func _CoreEganowAppGatewayNameEnquirySvc_GetGhQrAccountHolderName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EganowAppGatewayGhQrNameEnquiryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CoreEganowAppGatewayNameEnquirySvcServer).GetGhQrAccountHolderName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CoreEganowAppGatewayNameEnquirySvc_GetGhQrAccountHolderName_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CoreEganowAppGatewayNameEnquirySvcServer).GetGhQrAccountHolderName(ctx, req.(*EganowAppGatewayGhQrNameEnquiryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// CoreEganowAppGatewayNameEnquirySvc_ServiceDesc is the grpc.ServiceDesc for CoreEganowAppGatewayNameEnquirySvc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var CoreEganowAppMoneyTransferGatewaySvc_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "eganow.api.gateway.eganow_app.CoreEganowAppMoneyTransferGatewaySvc",
-	HandlerType: (*CoreEganowAppMoneyTransferGatewaySvcServer)(nil),
+var CoreEganowAppGatewayNameEnquirySvc_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "eganow.api.gateway.eganow_app.CoreEganowAppGatewayNameEnquirySvc",
+	HandlerType: (*CoreEganowAppGatewayNameEnquirySvcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetAccountHolderName",
-			Handler:    _CoreEganowAppMoneyTransferGatewaySvc_GetAccountHolderName_Handler,
+			Handler:    _CoreEganowAppGatewayNameEnquirySvc_GetAccountHolderName_Handler,
+		},
+		{
+			MethodName: "GetGhQrAccountHolderName",
+			Handler:    _CoreEganowAppGatewayNameEnquirySvc_GetGhQrAccountHolderName_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

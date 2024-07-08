@@ -66,7 +66,7 @@ func local_request_NameEnquirySvc_GetAccountHolderName_0(ctx context.Context, ma
 }
 
 func request_NameEnquirySvc_GetQrAccountHolderName_0(ctx context.Context, marshaler runtime.Marshaler, client NameEnquirySvcClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq NameEnquiryRequest
+	var protoReq GhQrNameEnquiryRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -83,7 +83,7 @@ func request_NameEnquirySvc_GetQrAccountHolderName_0(ctx context.Context, marsha
 }
 
 func local_request_NameEnquirySvc_GetQrAccountHolderName_0(ctx context.Context, marshaler runtime.Marshaler, server NameEnquirySvcServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq NameEnquiryRequest
+	var protoReq GhQrNameEnquiryRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)

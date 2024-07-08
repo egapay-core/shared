@@ -20,14 +20,14 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type EgaPayEmpty struct {
+type PaymentEmpty struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *EgaPayEmpty) Reset() {
-	*x = EgaPayEmpty{}
+func (x *PaymentEmpty) Reset() {
+	*x = PaymentEmpty{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_eganow_api_payment_common_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -35,13 +35,13 @@ func (x *EgaPayEmpty) Reset() {
 	}
 }
 
-func (x *EgaPayEmpty) String() string {
+func (x *PaymentEmpty) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EgaPayEmpty) ProtoMessage() {}
+func (*PaymentEmpty) ProtoMessage() {}
 
-func (x *EgaPayEmpty) ProtoReflect() protoreflect.Message {
+func (x *PaymentEmpty) ProtoReflect() protoreflect.Message {
 	mi := &file_eganow_api_payment_common_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -53,23 +53,21 @@ func (x *EgaPayEmpty) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EgaPayEmpty.ProtoReflect.Descriptor instead.
-func (*EgaPayEmpty) Descriptor() ([]byte, []int) {
+// Deprecated: Use PaymentEmpty.ProtoReflect.Descriptor instead.
+func (*PaymentEmpty) Descriptor() ([]byte, []int) {
 	return file_eganow_api_payment_common_proto_rawDescGZIP(), []int{0}
 }
 
-// The JSON representation for `StringValue` is JSON string.
-type EgaPayStringValue struct {
+type PaymentStringValue struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The string value.
 	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
 }
 
-func (x *EgaPayStringValue) Reset() {
-	*x = EgaPayStringValue{}
+func (x *PaymentStringValue) Reset() {
+	*x = PaymentStringValue{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_eganow_api_payment_common_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -77,13 +75,13 @@ func (x *EgaPayStringValue) Reset() {
 	}
 }
 
-func (x *EgaPayStringValue) String() string {
+func (x *PaymentStringValue) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EgaPayStringValue) ProtoMessage() {}
+func (*PaymentStringValue) ProtoMessage() {}
 
-func (x *EgaPayStringValue) ProtoReflect() protoreflect.Message {
+func (x *PaymentStringValue) ProtoReflect() protoreflect.Message {
 	mi := &file_eganow_api_payment_common_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -95,12 +93,12 @@ func (x *EgaPayStringValue) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EgaPayStringValue.ProtoReflect.Descriptor instead.
-func (*EgaPayStringValue) Descriptor() ([]byte, []int) {
+// Deprecated: Use PaymentStringValue.ProtoReflect.Descriptor instead.
+func (*PaymentStringValue) Descriptor() ([]byte, []int) {
 	return file_eganow_api_payment_common_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *EgaPayStringValue) GetValue() string {
+func (x *PaymentStringValue) GetValue() string {
 	if x != nil {
 		return x.Value
 	}
@@ -113,13 +111,13 @@ var file_eganow_api_payment_common_proto_rawDesc = []byte{
 	0x0a, 0x1f, 0x65, 0x67, 0x61, 0x6e, 0x6f, 0x77, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x70, 0x61, 0x79,
 	0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x12, 0x12, 0x65, 0x67, 0x61, 0x6e, 0x6f, 0x77, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61,
-	0x79, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x0d, 0x0a, 0x0b, 0x45, 0x67, 0x61, 0x50, 0x61, 0x79, 0x45,
-	0x6d, 0x70, 0x74, 0x79, 0x22, 0x29, 0x0a, 0x11, 0x45, 0x67, 0x61, 0x50, 0x61, 0x79, 0x53, 0x74,
-	0x72, 0x69, 0x6e, 0x67, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c,
-	0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x42,
-	0x1f, 0x5a, 0x1d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x65, 0x67,
-	0x61, 0x6e, 0x6f, 0x77, 0x2f, 0x63, 0x6f, 0x72, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x3b, 0x70, 0x62,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x79, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x0e, 0x0a, 0x0c, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74,
+	0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x2a, 0x0a, 0x12, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74,
+	0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x42, 0x1f, 0x5a, 0x1d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x65, 0x67, 0x61, 0x6e, 0x6f, 0x77, 0x2f, 0x63, 0x6f, 0x72, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x3b,
+	0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -136,8 +134,8 @@ func file_eganow_api_payment_common_proto_rawDescGZIP() []byte {
 
 var file_eganow_api_payment_common_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_eganow_api_payment_common_proto_goTypes = []interface{}{
-	(*EgaPayEmpty)(nil),       // 0: eganow.api.payment.EgaPayEmpty
-	(*EgaPayStringValue)(nil), // 1: eganow.api.payment.EgaPayStringValue
+	(*PaymentEmpty)(nil),       // 0: eganow.api.payment.PaymentEmpty
+	(*PaymentStringValue)(nil), // 1: eganow.api.payment.PaymentStringValue
 }
 var file_eganow_api_payment_common_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -154,7 +152,7 @@ func file_eganow_api_payment_common_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_eganow_api_payment_common_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*EgaPayEmpty); i {
+			switch v := v.(*PaymentEmpty); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -166,7 +164,7 @@ func file_eganow_api_payment_common_proto_init() {
 			}
 		}
 		file_eganow_api_payment_common_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*EgaPayStringValue); i {
+			switch v := v.(*PaymentStringValue); i {
 			case 0:
 				return &v.state
 			case 1:
