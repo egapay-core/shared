@@ -12,7 +12,7 @@ import (
 
 const (
 	payPartnerCacheKeyPrefix = "pay.partner.svc"
-	
+
 	serviceIdsExpiration = 0 // never expire
 )
 
@@ -35,10 +35,10 @@ func NewSharedRepository(ks *vault.KeyStoreConfig) ISharedRepository {
 	// create cache instance
 	rdb := cache.NewRdbConfigurator(ks).NewConn(cache.ServiceConnectionCacheIndex)
 	cacheInstance := cache.NewCache(rdb)
-	
+
 	// load data from vault into cache
 	loadDataFromVaultIntoCache(ks, cacheInstance)
-	
+
 	return &sharedRepository{ks: ks, rdb: cacheInstance}
 }
 
@@ -54,7 +54,7 @@ func (r *sharedRepository) GetConnectionForNameEnquiryClient(ctx context.Context
 		log.Printf("failed to map hash to struct: %v", err)
 		return "", err
 	}
-	
+
 	// get connection string
 	return fmt.Sprintf("%s.%s:%s", config.ServiceAddr, r.ks.PayPartnerServices.Host, r.ks.PayPartnerServices.Port), nil
 }
@@ -71,7 +71,7 @@ func (r *sharedRepository) GetConnectionForGhQrNameEnquiryClient(ctx context.Con
 		log.Printf("failed to map hash to struct: %v", err)
 		return "", err
 	}
-	
+
 	// get connection string
 	return fmt.Sprintf("%s.%s:%s", config.ServiceAddr, r.ks.PayPartnerServices.Host, r.ks.PayPartnerServices.Port), nil
 }
@@ -88,18 +88,18 @@ func (r *sharedRepository) GetConnectionForStatusQueryClient(ctx context.Context
 		log.Printf("failed to map hash to struct: %v", err)
 		return "", err
 	}
-	
+
 	// get connection string
 	return fmt.Sprintf("%s.%s:%s", config.ServiceAddr, r.ks.PayPartnerServices.Host, r.ks.PayPartnerServices.Port), nil
 }
 
 func loadDataFromVaultIntoCache(ks *vault.KeyStoreConfig, instance cache.ICache) {
 	var config payPartnerServiceIDFromVault
-	
+
 	// load data from vault
 	var vaultWg sync.WaitGroup
 	vaultWg.Add(4)
-	
+
 	var mtnVault mtnVaultConfig
 	go func(wg *sync.WaitGroup, ks *vault.KeyStoreConfig, config *mtnVaultConfig) {
 		defer wg.Done()
@@ -108,7 +108,7 @@ func loadDataFromVaultIntoCache(ks *vault.KeyStoreConfig, instance cache.ICache)
 			return
 		}
 	}(&vaultWg, ks, &mtnVault)
-	
+
 	var airtelVault airtelVaultConfig
 	go func(wg *sync.WaitGroup, ks *vault.KeyStoreConfig, config *airtelVaultConfig) {
 		defer wg.Done()
@@ -117,7 +117,7 @@ func loadDataFromVaultIntoCache(ks *vault.KeyStoreConfig, instance cache.ICache)
 			return
 		}
 	}(&vaultWg, ks, &airtelVault)
-	
+
 	var telecelVault telecelVaultConfig
 	go func(wg *sync.WaitGroup, ks *vault.KeyStoreConfig, config *telecelVaultConfig) {
 		defer wg.Done()
@@ -126,7 +126,7 @@ func loadDataFromVaultIntoCache(ks *vault.KeyStoreConfig, instance cache.ICache)
 			return
 		}
 	}(&vaultWg, ks, &telecelVault)
-	
+
 	var ghipssVault ghipssVaultConfig
 	go func(wg *sync.WaitGroup, ks *vault.KeyStoreConfig, config *ghipssVaultConfig) {
 		defer wg.Done()
@@ -135,33 +135,33 @@ func loadDataFromVaultIntoCache(ks *vault.KeyStoreConfig, instance cache.ICache)
 			return
 		}
 	}(&vaultWg, ks, &ghipssVault)
-	
+
 	vaultWg.Wait()
-	
+
 	// update config
 	config.MtnConfig = &mtnVault
 	config.AirtelConfig = &airtelVault
 	config.TelecelConfig = &telecelVault
 	config.GhipssConfig = ghipssVault.Config
 	connectionCfg := NewPayPartnerConnectionFromVault(&config)
-	
+
 	// load data from vault into cache
 	var svcs []*partnerServiceConfig
 	svcs = append(
 		svcs,
 		connectionCfg.GhipssConfig,
-		
+
 		connectionCfg.MtnConfig.EgapayMadApi,
 		connectionCfg.MtnConfig.EgapayOpenApi,
 		connectionCfg.AirtelConfig.Egapay,
 		connectionCfg.TelecelConfig.Egapay,
-		
+
 		connectionCfg.MtnConfig.PospayMadApi,
 		connectionCfg.MtnConfig.PospayOpenApi,
 		connectionCfg.AirtelConfig.Pospay,
 		connectionCfg.TelecelConfig.Pospay,
 	)
-	
+
 	var wg sync.WaitGroup
 	for _, svc := range svcs {
 		wg.Add(1)
@@ -171,9 +171,8 @@ func loadDataFromVaultIntoCache(ks *vault.KeyStoreConfig, instance cache.ICache)
 			storeServiceConfig(ctx, instance, svc)
 		}(&wg, instance, svc)
 	}
-	
+
 	wg.Wait()
-	log.Printf("loaded %d pay partner service configs from vault into cache", len(svcs))
 }
 
 // storeServiceConfig - store the pay partner service config in cache
@@ -182,11 +181,10 @@ func storeServiceConfig(ctx context.Context, rdb cache.ICache, config *partnerSe
 		log.Println("pay partner service config is nil...skip storing in cache")
 		return
 	}
-	
+
 	key := fmt.Sprintf("%s:%s", payPartnerCacheKeyPrefix, config.ServiceID)
 	if err := rdb.StoreHash(ctx, key, structToMap(*config), serviceIdsExpiration); err != nil {
 		log.Printf("failed to store data in cache: %v", err)
 		return
 	}
-	log.Printf("stored pay partner service config in cache: %v", config.ServiceID)
 }
