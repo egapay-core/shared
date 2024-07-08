@@ -6,7 +6,7 @@
   },
   "tags": [
     {
-      "name": "CoreEganowAppMoneyTransferGatewaySvc"
+      "name": "CoreEganowAppGatewayNameEnquirySvc"
     }
   ],
   "consumes": [
@@ -17,6 +17,15 @@
   ],
   "paths": {},
   "definitions": {
+    "eganow_appEganowAppGatewayBankRequestType": {
+      "type": "string",
+      "enum": [
+        "BANK_REQ_UNSPECIFIED",
+        "BANK_REQ_DEBIT",
+        "BANK_REQ_CREDIT"
+      ],
+      "default": "BANK_REQ_UNSPECIFIED"
+    },
     "eganow_appEganowAppGatewayNameEnquiryRequestBankNameEnquiryRequest": {
       "type": "object",
       "properties": {
@@ -38,7 +47,7 @@
           "type": "string"
         },
         "requestType": {
-          "$ref": "#/definitions/eganow_appEganowAppGatewayNameEnquiryRequestRequestType"
+          "$ref": "#/definitions/eganow_appEganowAppGatewayBankRequestType"
         }
       },
       "required": [
@@ -49,22 +58,10 @@
         "requestType"
       ]
     },
-    "eganow_appEganowAppGatewayNameEnquiryRequestRequestType": {
-      "type": "string",
-      "enum": [
-        "UNSPECIFIED",
-        "DEBIT",
-        "CREDIT"
-      ],
-      "default": "UNSPECIFIED"
-    },
-    "eganow_appEganowAppGatewayNameEnquiryResponse": {
+    "eganow_appEganowAppGatewayStringValue": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string"
-        },
-        "qrCode": {
+        "value": {
           "type": "string"
         }
       }

@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	CoreMoneyTransferSvc_CollectMoney_FullMethodName = "/eganow.api.payment.CoreMoneyTransferSvc/CollectMoney"
-	CoreMoneyTransferSvc_PayoutMoney_FullMethodName  = "/eganow.api.payment.CoreMoneyTransferSvc/PayoutMoney"
+	CoreMoneyTransferSvc_CollectMoney_FullMethodName           = "/eganow.api.payment.CoreMoneyTransferSvc/CollectMoney"
+	CoreMoneyTransferSvc_PayoutMoney_FullMethodName            = "/eganow.api.payment.CoreMoneyTransferSvc/PayoutMoney"
+	CoreMoneyTransferSvc_QueryTransactionStatus_FullMethodName = "/eganow.api.payment.CoreMoneyTransferSvc/QueryTransactionStatus"
 )
 
 // CoreMoneyTransferSvcClient is the client API for CoreMoneyTransferSvc service.
@@ -29,6 +30,7 @@ const (
 type CoreMoneyTransferSvcClient interface {
 	CollectMoney(ctx context.Context, in *PaymentMoneyTransferRequest, opts ...grpc.CallOption) (*PaymentMoneyTransferResponse, error)
 	PayoutMoney(ctx context.Context, in *PaymentMoneyTransferRequest, opts ...grpc.CallOption) (*PaymentMoneyTransferResponse, error)
+	QueryTransactionStatus(ctx context.Context, in *PaymentStatusQueryRequest, opts ...grpc.CallOption) (*PaymentStringValue, error)
 }
 
 type coreMoneyTransferSvcClient struct {
@@ -57,12 +59,22 @@ func (c *coreMoneyTransferSvcClient) PayoutMoney(ctx context.Context, in *Paymen
 	return out, nil
 }
 
+func (c *coreMoneyTransferSvcClient) QueryTransactionStatus(ctx context.Context, in *PaymentStatusQueryRequest, opts ...grpc.CallOption) (*PaymentStringValue, error) {
+	out := new(PaymentStringValue)
+	err := c.cc.Invoke(ctx, CoreMoneyTransferSvc_QueryTransactionStatus_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CoreMoneyTransferSvcServer is the server API for CoreMoneyTransferSvc service.
 // All implementations must embed UnimplementedCoreMoneyTransferSvcServer
 // for forward compatibility
 type CoreMoneyTransferSvcServer interface {
 	CollectMoney(context.Context, *PaymentMoneyTransferRequest) (*PaymentMoneyTransferResponse, error)
 	PayoutMoney(context.Context, *PaymentMoneyTransferRequest) (*PaymentMoneyTransferResponse, error)
+	QueryTransactionStatus(context.Context, *PaymentStatusQueryRequest) (*PaymentStringValue, error)
 	mustEmbedUnimplementedCoreMoneyTransferSvcServer()
 }
 
@@ -75,6 +87,9 @@ func (UnimplementedCoreMoneyTransferSvcServer) CollectMoney(context.Context, *Pa
 }
 func (UnimplementedCoreMoneyTransferSvcServer) PayoutMoney(context.Context, *PaymentMoneyTransferRequest) (*PaymentMoneyTransferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PayoutMoney not implemented")
+}
+func (UnimplementedCoreMoneyTransferSvcServer) QueryTransactionStatus(context.Context, *PaymentStatusQueryRequest) (*PaymentStringValue, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryTransactionStatus not implemented")
 }
 func (UnimplementedCoreMoneyTransferSvcServer) mustEmbedUnimplementedCoreMoneyTransferSvcServer() {}
 
@@ -125,6 +140,24 @@ func _CoreMoneyTransferSvc_PayoutMoney_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CoreMoneyTransferSvc_QueryTransactionStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PaymentStatusQueryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CoreMoneyTransferSvcServer).QueryTransactionStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CoreMoneyTransferSvc_QueryTransactionStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CoreMoneyTransferSvcServer).QueryTransactionStatus(ctx, req.(*PaymentStatusQueryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CoreMoneyTransferSvc_ServiceDesc is the grpc.ServiceDesc for CoreMoneyTransferSvc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -140,20 +173,26 @@ var CoreMoneyTransferSvc_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "PayoutMoney",
 			Handler:    _CoreMoneyTransferSvc_PayoutMoney_Handler,
 		},
+		{
+			MethodName: "QueryTransactionStatus",
+			Handler:    _CoreMoneyTransferSvc_QueryTransactionStatus_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "eganow/api/payment/payment_service.proto",
 }
 
 const (
-	CoreNameEnquirySvc_GetAccountHolderName_FullMethodName = "/eganow.api.payment.CoreNameEnquirySvc/GetAccountHolderName"
+	CoreNameEnquirySvc_GetAccountHolderName_FullMethodName     = "/eganow.api.payment.CoreNameEnquirySvc/GetAccountHolderName"
+	CoreNameEnquirySvc_GetGhQrAccountHolderName_FullMethodName = "/eganow.api.payment.CoreNameEnquirySvc/GetGhQrAccountHolderName"
 )
 
 // CoreNameEnquirySvcClient is the client API for CoreNameEnquirySvc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CoreNameEnquirySvcClient interface {
-	GetAccountHolderName(ctx context.Context, in *PaymentNameEnquiryRequest, opts ...grpc.CallOption) (*PaymentNameEnquiryResponse, error)
+	GetAccountHolderName(ctx context.Context, in *PaymentNameEnquiryRequest, opts ...grpc.CallOption) (*PaymentStringValue, error)
+	GetGhQrAccountHolderName(ctx context.Context, in *PaymentGhQrNameEnquiryRequest, opts ...grpc.CallOption) (*PaymentStringValue, error)
 }
 
 type coreNameEnquirySvcClient struct {
@@ -164,9 +203,18 @@ func NewCoreNameEnquirySvcClient(cc grpc.ClientConnInterface) CoreNameEnquirySvc
 	return &coreNameEnquirySvcClient{cc}
 }
 
-func (c *coreNameEnquirySvcClient) GetAccountHolderName(ctx context.Context, in *PaymentNameEnquiryRequest, opts ...grpc.CallOption) (*PaymentNameEnquiryResponse, error) {
-	out := new(PaymentNameEnquiryResponse)
+func (c *coreNameEnquirySvcClient) GetAccountHolderName(ctx context.Context, in *PaymentNameEnquiryRequest, opts ...grpc.CallOption) (*PaymentStringValue, error) {
+	out := new(PaymentStringValue)
 	err := c.cc.Invoke(ctx, CoreNameEnquirySvc_GetAccountHolderName_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *coreNameEnquirySvcClient) GetGhQrAccountHolderName(ctx context.Context, in *PaymentGhQrNameEnquiryRequest, opts ...grpc.CallOption) (*PaymentStringValue, error) {
+	out := new(PaymentStringValue)
+	err := c.cc.Invoke(ctx, CoreNameEnquirySvc_GetGhQrAccountHolderName_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -177,7 +225,8 @@ func (c *coreNameEnquirySvcClient) GetAccountHolderName(ctx context.Context, in 
 // All implementations must embed UnimplementedCoreNameEnquirySvcServer
 // for forward compatibility
 type CoreNameEnquirySvcServer interface {
-	GetAccountHolderName(context.Context, *PaymentNameEnquiryRequest) (*PaymentNameEnquiryResponse, error)
+	GetAccountHolderName(context.Context, *PaymentNameEnquiryRequest) (*PaymentStringValue, error)
+	GetGhQrAccountHolderName(context.Context, *PaymentGhQrNameEnquiryRequest) (*PaymentStringValue, error)
 	mustEmbedUnimplementedCoreNameEnquirySvcServer()
 }
 
@@ -185,8 +234,11 @@ type CoreNameEnquirySvcServer interface {
 type UnimplementedCoreNameEnquirySvcServer struct {
 }
 
-func (UnimplementedCoreNameEnquirySvcServer) GetAccountHolderName(context.Context, *PaymentNameEnquiryRequest) (*PaymentNameEnquiryResponse, error) {
+func (UnimplementedCoreNameEnquirySvcServer) GetAccountHolderName(context.Context, *PaymentNameEnquiryRequest) (*PaymentStringValue, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountHolderName not implemented")
+}
+func (UnimplementedCoreNameEnquirySvcServer) GetGhQrAccountHolderName(context.Context, *PaymentGhQrNameEnquiryRequest) (*PaymentStringValue, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGhQrAccountHolderName not implemented")
 }
 func (UnimplementedCoreNameEnquirySvcServer) mustEmbedUnimplementedCoreNameEnquirySvcServer() {}
 
@@ -219,6 +271,24 @@ func _CoreNameEnquirySvc_GetAccountHolderName_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CoreNameEnquirySvc_GetGhQrAccountHolderName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PaymentGhQrNameEnquiryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CoreNameEnquirySvcServer).GetGhQrAccountHolderName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CoreNameEnquirySvc_GetGhQrAccountHolderName_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CoreNameEnquirySvcServer).GetGhQrAccountHolderName(ctx, req.(*PaymentGhQrNameEnquiryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CoreNameEnquirySvc_ServiceDesc is the grpc.ServiceDesc for CoreNameEnquirySvc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -229,6 +299,10 @@ var CoreNameEnquirySvc_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAccountHolderName",
 			Handler:    _CoreNameEnquirySvc_GetAccountHolderName_Handler,
+		},
+		{
+			MethodName: "GetGhQrAccountHolderName",
+			Handler:    _CoreNameEnquirySvc_GetGhQrAccountHolderName_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
