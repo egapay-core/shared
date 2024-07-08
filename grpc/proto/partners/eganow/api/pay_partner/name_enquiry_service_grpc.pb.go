@@ -29,7 +29,7 @@ const (
 type NameEnquirySvcClient interface {
 	// GetCustomerName returns the name of the account holder
 	GetAccountHolderName(ctx context.Context, in *NameEnquiryRequest, opts ...grpc.CallOption) (*PayPartnerStringValue, error)
-	GetQrAccountHolderName(ctx context.Context, in *NameEnquiryRequest, opts ...grpc.CallOption) (*QrNameEnquiryResponse, error)
+	GetQrAccountHolderName(ctx context.Context, in *GhQrNameEnquiryRequest, opts ...grpc.CallOption) (*GhQrNameEnquiryResponse, error)
 }
 
 type nameEnquirySvcClient struct {
@@ -49,8 +49,8 @@ func (c *nameEnquirySvcClient) GetAccountHolderName(ctx context.Context, in *Nam
 	return out, nil
 }
 
-func (c *nameEnquirySvcClient) GetQrAccountHolderName(ctx context.Context, in *NameEnquiryRequest, opts ...grpc.CallOption) (*QrNameEnquiryResponse, error) {
-	out := new(QrNameEnquiryResponse)
+func (c *nameEnquirySvcClient) GetQrAccountHolderName(ctx context.Context, in *GhQrNameEnquiryRequest, opts ...grpc.CallOption) (*GhQrNameEnquiryResponse, error) {
+	out := new(GhQrNameEnquiryResponse)
 	err := c.cc.Invoke(ctx, NameEnquirySvc_GetQrAccountHolderName_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -64,7 +64,7 @@ func (c *nameEnquirySvcClient) GetQrAccountHolderName(ctx context.Context, in *N
 type NameEnquirySvcServer interface {
 	// GetCustomerName returns the name of the account holder
 	GetAccountHolderName(context.Context, *NameEnquiryRequest) (*PayPartnerStringValue, error)
-	GetQrAccountHolderName(context.Context, *NameEnquiryRequest) (*QrNameEnquiryResponse, error)
+	GetQrAccountHolderName(context.Context, *GhQrNameEnquiryRequest) (*GhQrNameEnquiryResponse, error)
 	mustEmbedUnimplementedNameEnquirySvcServer()
 }
 
@@ -75,7 +75,7 @@ type UnimplementedNameEnquirySvcServer struct {
 func (UnimplementedNameEnquirySvcServer) GetAccountHolderName(context.Context, *NameEnquiryRequest) (*PayPartnerStringValue, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountHolderName not implemented")
 }
-func (UnimplementedNameEnquirySvcServer) GetQrAccountHolderName(context.Context, *NameEnquiryRequest) (*QrNameEnquiryResponse, error) {
+func (UnimplementedNameEnquirySvcServer) GetQrAccountHolderName(context.Context, *GhQrNameEnquiryRequest) (*GhQrNameEnquiryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQrAccountHolderName not implemented")
 }
 func (UnimplementedNameEnquirySvcServer) mustEmbedUnimplementedNameEnquirySvcServer() {}
@@ -110,7 +110,7 @@ func _NameEnquirySvc_GetAccountHolderName_Handler(srv interface{}, ctx context.C
 }
 
 func _NameEnquirySvc_GetQrAccountHolderName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NameEnquiryRequest)
+	in := new(GhQrNameEnquiryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -122,7 +122,7 @@ func _NameEnquirySvc_GetQrAccountHolderName_Handler(srv interface{}, ctx context
 		FullMethod: NameEnquirySvc_GetQrAccountHolderName_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NameEnquirySvcServer).GetQrAccountHolderName(ctx, req.(*NameEnquiryRequest))
+		return srv.(NameEnquirySvcServer).GetQrAccountHolderName(ctx, req.(*GhQrNameEnquiryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
