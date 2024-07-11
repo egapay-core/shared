@@ -30,7 +30,8 @@
           "type": "string"
         },
         "accountNumber": {
-          "type": "string"
+          "type": "string",
+          "title": "phone number / bank account number"
         },
         "accountName": {
           "type": "string"
